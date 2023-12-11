@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:36:09 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/11 18:24:42 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/11 20:40:47 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,23 @@ int	parser_error(t_ptree *tree, t_tokenlst *list)
 {
 	const char	*token = " \t\n;()|&<>";
 
-	if (tree == NULL)
+	if (list == NULL && tree != NULL)
+		return (0);
+	if (list != NULL)
 	{
-		if (list != NULL)
-		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd("syntax error near unexpected token '", 2);
-			if (token[list->type] == '\n')
-				ft_putstr_fd("newline", 2);
-			else
-				ft_putchar_fd(token[list->type], 2);
-			ft_putendl_fd("'", 2);
-			tokenizer_list_all_free(&list);
-		}
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd("syntax error near unexpected token '", 2);
+		if (token[list->type] == '\n')
+			ft_putstr_fd("newline", 2);
 		else
-		{
-			ft_putstr_fd("minishell : ", 2);
-			ft_putendl_fd("syntax error: unexpected end of file", 2);
-		}
-		return (1);
+			ft_putchar_fd(token[list->type], 2);
+		ft_putendl_fd("'", 2);
+		tokenizer_list_all_free(&list);
 	}
-	return (0);
+	else if (tree == NULL)
+	{
+		ft_putstr_fd("minishell : ", 2);
+		ft_putendl_fd("syntax error: unexpected end of file", 2);
+	}
+	return (1);
 }
