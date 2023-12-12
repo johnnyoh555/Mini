@@ -3,19 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tree_order.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 20:28:58 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/11 20:02:18 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:45:35 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	excute_cmd(t_command *cmd)
+static void	init_info(t_command *command, t_info *info)
 {
-	print_command_list(cmd);
-	return (0);
+	int		i;
+	int		j;
+
+	info->cmd = 0;
+	while (command)
+	{
+		command = command->next;
+		info->cmd++;
+	}
+	i = 0;
+	info->path = 0;
+	while ((info->envp)[i])
+	{
+		j = -1;
+		if (!ft_strncmp("PATH=", (info->envp)[i], 5))
+		{
+			info->path = ft_split((info->envp)[i] + 5, ':');
+			break ;
+		}
+		i++;
+	}
+}
+
+int	excute_cmd(t_command *cmd, t_info *info)
+{
+	int	ret;
+
+	init_info(cmd, info);
+	ret = execute(cmd, info);
+	// print_command_list(cmd);
+	return (ret);
 }
 
 void	parser_tree_left_search(t_ptree *tree, t_command **cmd)
@@ -26,10 +55,10 @@ void	parser_tree_left_search(t_ptree *tree, t_command **cmd)
 		command_list_add_redirection(cmd, tree->expr);
 	else if (tree->type == P_EXPR)
 		command_list_add_expr(cmd, tree->expr);
-	parser_tree_order(tree->left, cmd);
+	parser_tree_order(tree->left, cmd, 0);
 }
 
-void	parser_tree_order(t_ptree *tree, t_command **pcmd)
+void	parser_tree_order(t_ptree *tree, t_command **pcmd, t_info *info)
 {
 	t_command	*cmd;
 	int			ret;
@@ -45,15 +74,15 @@ void	parser_tree_order(t_ptree *tree, t_command **pcmd)
 	{
 		if (cmd != NULL)
 		{
-			ret = excute_cmd(cmd);
+			ret = excute_cmd(cmd, info);
 			command_list_all_free(cmd);
 			if (tree->expr != NULL && \
 				((ret == 0 && ft_strncmp("||", tree->expr, 3) == 0) || \
 				(ret == 1 && ft_strncmp("&&", tree->expr, 3) == 0)))
 				return ;
 		}
-		parser_tree_order(tree->right, &cmd);
+		parser_tree_order(tree->right, &cmd, info);
 	}
 	else
-		parser_tree_order(tree->right, pcmd);
+		parser_tree_order(tree->right, pcmd, info);
 }

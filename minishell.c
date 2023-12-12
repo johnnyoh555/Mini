@@ -3,14 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:35:55 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/11 20:02:12 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:25:55 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int check_if_path(char **strs)
+{
+	int	idx;
+
+	idx = 0;
+	while (strs[idx])
+	{
+		if (!ft_strncmp("PATH=", strs[idx], 5))
+			return (0);
+		idx++;
+	}
+	return (1);
+}
+
+static void	make_envp(t_info *info, char **strs)
+{
+	char	**envp;
+	int		len;
+	int		idx;
+	int		flag;
+
+	len = 0;
+	while (strs[len] != NULL)
+		len++;
+	flag = check_if_path(strs);
+	envp = ft_calloc(len + flag + 1, sizeof(char **));
+	idx = 0;
+	while (strs[idx] != NULL)
+	{
+		envp[idx] = ft_strdup(strs[idx]);
+		idx++;
+	}
+	if (flag)
+		envp[idx] = ft_strdup("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
+	info->envp = envp;
+}
 
 void	leak(void)
 {
@@ -41,10 +78,11 @@ int	main(int argc, char **argv, char **envp)
 	char		*str;
 	t_tokenlst	*list;
 	t_ptree		*tree;
+	t_info		info;
 
 	(void)argc;
 	(void)argv;
-	(void)envp;
+	make_envp(&info, envp);
 	signal_setting();
 	while (1)
 	{
@@ -56,7 +94,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			tree = parser_cmd(&list);
 			if (parser_error(tree, list) == 0)
-				parser_tree_order(tree, NULL);
+				parser_tree_order(tree, NULL, &info);
 			parser_tree_all_free(tree);
 		}
 		add_history(str);

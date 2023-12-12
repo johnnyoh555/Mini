@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:19:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/11 16:04:16 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:40:42 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <sys/stat.h>
 # include <termios.h>
 # include <term.h>
+# include <fcntl.h>
 
 typedef enum e_quote
 {
@@ -95,6 +96,16 @@ typedef struct s_command
 	struct s_command	*next;
 }	t_command;
 
+typedef struct s_info
+{
+	int		idx;
+	int		cmd;
+	int		*fd;
+	pid_t	pid;
+	char	**envp;
+	char	**path;
+}	t_info;
+
 t_tokenlst	*tokenizer_parse(char *str);
 
 t_tokenlst	*tokenizer_list_create_node(int type, char *str);
@@ -114,7 +125,7 @@ int			parser_utils_check_type(int type, t_tokenlst *node);
 char		*parser_utils_get_node_str(t_tokenlst *node);
 int			parser_error(t_ptree *tree, t_tokenlst *list);
 
-void		parser_tree_order(t_ptree *tree, t_command **pcmd);
+void		parser_tree_order(t_ptree *tree, t_command **pcmd, t_info *info);
 
 t_command	*command_list_create_node(void);
 void		command_list_add_node(t_command **list, t_command *node);
@@ -129,5 +140,48 @@ void		command_list_add_redirection(t_command **list, char *expr);
 void		print_parser_tree(t_ptree *tree, int flag);
 void		print_token_list(t_tokenlst *list);
 void		print_command_list(t_command *list);
+
+// excute/utils.c
+int			err_seq(char *str, char *err, int ex, int flag);
+int			ft_strcmp(const char *s1, const char *s2);
+
+// excute/unset.c
+int			builtin_unset(char **cmd, t_info *info);
+
+// excute/single_cmd.c
+char		*cmd_path(t_info *info, char **cmd, int idx);
+int			single_cmd(t_command *command, t_info *info);
+
+// excute/pwd.c
+int			builtin_pwd(char **cmd, t_info *info);
+
+// excute/openfiles.c
+int			open_read_files(char **infiles);
+int			open_write_files(char **outfiles);
+
+// excute/multi_cmd.c
+void		child(t_command *command, t_info *info);
+
+// excute/export_with_arg.c
+int			make_ev(t_info *info, char *arg);
+
+// excute/export_no_arg.c
+int			builtin_export(char **cmd, t_info *info);
+
+// excute/exit.c
+int			builtin_exit(char **cmd, t_info *info);
+
+// excute/excute.c
+int			execute(t_command *command, t_info *info);
+void		close_pipe(t_info *info);
+
+// excute/echo.c
+int			builtin_echo(char **cmd, t_info *info);
+
+// excute/builtin_env.c
+int			builtin_env(char **cmd, t_info *info);
+
+// excute/builtin_cd.c
+int			builtin_cd(char **cmd, t_info *info);
 
 #endif
