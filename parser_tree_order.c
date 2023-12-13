@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tree_order.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 20:28:58 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/13 14:24:35 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/13 21:16:08 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,17 @@ int	excute_cmd(t_command *cmd, t_info *info)
 	int	ret;
 
 	init_info(cmd, info);
+	if (extend_env(cmd, info))
+		return (1);
+	// erase_quotes();
+	// extend_wildcard();
+	// creat_heredoc();
+	// if ()
+	// 	return (-1);
 	ret = execute(cmd, info);
-	return (ret);
+	if (ret)
+		return (1);
+	return (0);
 }
 
 void	parser_tree_left_search(t_ptree *tree, t_command **cmd, t_info *info)

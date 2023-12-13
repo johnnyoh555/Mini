@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:19:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/13 17:47:42 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/13 21:17:43 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ int			single_cmd(t_command *command, t_info *info);
 int			builtin_pwd(char **cmd, t_info *info);
 
 // excute/openfiles.c
-int	get_fds(t_command *command, t_info *info, int in, int out);
+int			get_fds(t_command *command, t_info *info, int in, int out);
 
 // excute/multi_cmd.c
 void		child(t_command *command, t_info *info);
@@ -192,5 +192,12 @@ int			builtin_env(char **cmd, t_info *info);
 
 // excute/builtin_cd.c
 int			builtin_cd(char **cmd, t_info *info);
+
+// excute/extend_env.c
+char		*env_to_str(t_info *info, char *str, char *ret, int len);
+int			extend_env(t_command *command, t_info *info);
+
+// excute/change_env.c
+char		*change_env(char *str, t_info *info);
 
 #endif
