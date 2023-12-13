@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:19:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/13 21:21:08 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/13 22:11:47 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct s_command
 	int					type;
 	char				**exprs;
 	char				**infiles;
+	int					*inflag;
 	char				**outfiles;
 	struct s_command	*next;
 }	t_command;
