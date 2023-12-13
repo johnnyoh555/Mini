@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   excute.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:00:49 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/12 15:56:46 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/13 14:12:57 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,11 @@ int	execute(t_command *command, t_info *info)
 	if (info->cmd == 1)
 	{
 		ret = single_cmd(command, info);
-		if (ret == -1)
-			return (wait_dl(info));
+		if (ret != -1)
+			return (ret);
+		signal_setting(signal_child_handler, signal_child_handler);
+		ret = wait_dl(info);
+		signal_setting(SIG_IGN, signal_readline_handler);
 		return (ret);
 	}
 	im_mario(info);
@@ -95,6 +98,8 @@ int	execute(t_command *command, t_info *info)
 		info->idx++;
 	}
 	close_pipe(info);
+	signal_setting(signal_child_handler, signal_child_handler);
 	ret = wait_dl(info);
+	signal_setting(SIG_IGN, signal_readline_handler);
 	return (ret);
 }

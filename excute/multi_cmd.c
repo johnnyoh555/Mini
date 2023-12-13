@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multi_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:00:06 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/12 15:52:39 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/13 14:06:58 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	child(t_command *command, t_info *info)
 	info->pid = fork();
 	if (info->pid == 0)
 	{
+		signal_setting(SIG_DFL, SIG_DFL);
 		if (info->idx == 1)
 			first_child(command, info);
 		else if (info->idx == info->cmd)

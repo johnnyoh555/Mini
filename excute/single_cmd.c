@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   single_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 17:32:32 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/12 15:42:51 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/13 14:08:06 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static int	single_simple_cmd(t_command *command, t_info *info)
 	pid = fork();
 	if (pid != 0)
 		return (0);
+	signal_setting(SIG_DFL, SIG_DFL);
 	fd_read = open_read_files(command->infiles);
 	fd_write = open_write_files(command->outfiles);
 	if (fd_read == -1 || fd_write == -1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:19:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/12 15:40:42 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/13 14:06:14 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ typedef struct s_info
 	char	**path;
 }	t_info;
 
+extern int	g_exit_status;
+
 t_tokenlst	*tokenizer_parse(char *str);
 
 t_tokenlst	*tokenizer_list_create_node(int type, char *str);
@@ -136,6 +138,11 @@ void		command_list_all_free(t_command *list);
 void		command_list_free_strs(char **strs);
 void		command_list_add_expr(t_command **list, char *expr);
 void		command_list_add_redirection(t_command **list, char *expr);
+
+void		signal_readline_handler(int signo);
+void		signal_child_handler(int signo);
+void		signal_heredoc_handler(int signo);
+void		signal_setting(void (quit)(int), void (interrupt)(int));
 
 void		print_parser_tree(t_ptree *tree, int flag);
 void		print_token_list(t_tokenlst *list);

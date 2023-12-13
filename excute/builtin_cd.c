@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 18:34:26 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/12 15:29:21 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/13 14:23:26 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	make_o_pwd(t_info *info, char *o_pwd)
 	info->envp = new_ev;
 }
 
-static void change_o_pwd(t_info *info, char *o_pwd)
+static void	change_o_pwd(t_info *info, char *o_pwd)
 {
 	int	idx;
 

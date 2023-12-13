@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 16:55:01 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/11 16:15:11 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:04:33 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static char	**command_list_append_strs(char **strs, char *expr)
 		idx++;
 	}
 	exprs[idx++] = ft_strdup(expr);
-	exprs[idx] = NULL;
 	command_list_free_strs(strs);
 	return (exprs);
 }
