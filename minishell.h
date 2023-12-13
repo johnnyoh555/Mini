@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:19:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/13 15:09:01 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/13 17:47:42 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,9 @@ typedef struct s_info
 	pid_t	pid;
 	char	**envp;
 	char	**path;
+	int		exit_code;
+	int		fd_read;
+	int		fd_write;
 }	t_info;
 
 extern int	g_exit_status;
@@ -163,8 +166,7 @@ int			single_cmd(t_command *command, t_info *info);
 int			builtin_pwd(char **cmd, t_info *info);
 
 // excute/openfiles.c
-int			open_read_files(char **infiles, int ret);
-int			open_write_files(char **outfiles, int ret);
+int	get_fds(t_command *command, t_info *info, int in, int out);
 
 // excute/multi_cmd.c
 void		child(t_command *command, t_info *info);

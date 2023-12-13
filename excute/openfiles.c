@@ -6,13 +6,13 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 14:11:15 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/13 15:13:00 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/13 17:47:23 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	open_write_files(char **outfiles, int ret)
+static int	open_write_files(char **outfiles, int ret)
 {
 	int	idx;
 	int	fd;
@@ -38,7 +38,7 @@ int	open_write_files(char **outfiles, int ret)
 	return (fd);
 }
 
-int	open_read_files(char **infiles, int ret)
+static int	open_read_files(char **infiles, int ret)
 {
 	int	idx;
 	int	fd;
@@ -59,4 +59,19 @@ int	open_read_files(char **infiles, int ret)
 		idx += 2;
 	}
 	return (fd);
+}
+
+int	get_fds(t_command *command, t_info *info, int in, int out)
+{
+	info->fd_read = open_read_files(command->infiles, in);
+	if (info->fd_read == -1)
+		return (1);
+	info->fd_write = open_write_files(command->outfiles, out);
+	if (info->fd_write == -1)
+	{
+		if (info->fd_read != 0)
+			close(info->fd_read);
+		return (1);
+	}
+	return (0);
 }

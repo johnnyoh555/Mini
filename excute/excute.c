@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   excute.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:00:49 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/13 14:12:57 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:32:43 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,16 @@ static int	wait_dl(t_info *info)
 
 int	execute(t_command *command, t_info *info)
 {
-	int	ret;
-
 	info->idx = 1;
 	if (info->cmd == 1)
 	{
-		ret = single_cmd(command, info);
-		if (ret != -1)
-			return (ret);
+		info->exit_code = single_cmd(command, info);
+		if (info->exit_code != -1)
+			return (info->exit_code);
 		signal_setting(signal_child_handler, signal_child_handler);
-		ret = wait_dl(info);
+		info->exit_code = wait_dl(info);
 		signal_setting(SIG_IGN, signal_readline_handler);
-		return (ret);
+		return (info->exit_code);
 	}
 	im_mario(info);
 	while (info->idx <= info->cmd)
@@ -99,7 +97,7 @@ int	execute(t_command *command, t_info *info)
 	}
 	close_pipe(info);
 	signal_setting(signal_child_handler, signal_child_handler);
-	ret = wait_dl(info);
+	info->exit_code = wait_dl(info);
 	signal_setting(SIG_IGN, signal_readline_handler);
-	return (ret);
+	return (info->exit_code);
 }

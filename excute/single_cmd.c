@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 17:32:32 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/13 15:13:21 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/13 17:49:41 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,35 +33,38 @@ static int	go_to_builtin(char **cmd, t_info *info)
 
 static int	single_builtin_cmd(t_command *command, t_info *info)
 {
-	int		fd_read;
-	int		fd_write;
+	int		org_read;
+	int		org_write;
+	int		ret;
 
-	fd_read = open_read_files(command->infiles, 0);
-	fd_write = open_write_files(command->outfiles, 1);
-	if (fd_read == -1 || fd_write == -1)
+	org_read = dup(0);
+	org_write = dup(1);
+	if (get_fds(command, info, 0, 1))
 		return (1);
-	dup2(fd_read, 0);
-	dup2(fd_write, 1);
-	return (go_to_builtin(command->exprs, info));
+	dup2(info->fd_read, 0);
+	dup2(info->fd_write, 1);
+	ret = go_to_builtin(command->exprs, info);
+	if (info->fd_read != 0)
+		close(info->fd_read);
+	if (info->fd_write != 1)
+		close(info->fd_write);
+	dup2(org_read, 0);
+	dup2(org_write, 1);
+	return (ret);
 }
 
 static int	single_simple_cmd(t_command *command, t_info *info)
 {
-	int		fd_read;
-	int		fd_write;
 	char	*path;
-	pid_t	pid;
 
-	pid = fork();
-	if (pid != 0)
+	info->pid = fork();
+	if (info->pid != 0)
 		return (0);
 	signal_setting(SIG_DFL, SIG_DFL);
-	fd_read = open_read_files(command->infiles, 0);
-	fd_write = open_write_files(command->outfiles, 1);
-	if (fd_read == -1 || fd_write == -1)
+	if (get_fds(command, info, 0, 1))
 		exit(1);
-	dup2(fd_read, 0);
-	dup2(fd_write, 1);
+	dup2(info->fd_read, 0);
+	dup2(info->fd_write, 1);
 	path = cmd_path(info, command->exprs, 0);
 	if (execve(path, command->exprs, info->envp) == -1)
 		err_seq(command->exprs[0], 0, 126, 0);

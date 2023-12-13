@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:00:06 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/13 15:14:01 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/13 17:46:26 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,20 @@ static int	check_what_cmd(char **cmd, t_info *info)
 
 static void	first_child(t_command *command, t_info *info)
 {
-	int		fd_read;
-	int		fd_write;
-
-	fd_read = open_read_files(command->infiles, 0);
-	fd_write = open_write_files(command->outfiles, (info->fd)[1]);
-	dup2(fd_read, 0);
-	dup2(fd_write, 1);
+	if (get_fds(command, info, 0, (info->fd)[1]))
+		exit (1);
+	dup2(info->fd_read, 0);
+	dup2(info->fd_write, 1);
 	close_pipe(info);
 	exit(check_what_cmd(command->exprs, info));
 }
 
 static void	last_child(t_command *command, t_info *info)
 {
-	int		fd_write;
-	int		fd_read;
-
-	fd_read = open_read_files(command->infiles,
-			(info->fd)[(info->cmd * 2) - 4]);
-	fd_write = open_write_files(command->outfiles, 1);
-	dup2(fd_read, 0);
-	dup2(fd_write, 1);
+	if (get_fds(command, info, (info->fd)[(info->cmd * 2) - 4], 1))
+		exit (1);
+	dup2(info->fd_read, 0);
+	dup2(info->fd_write, 1);
 	close_pipe(info);
 	exit(check_what_cmd(command->exprs, info));
 }
@@ -70,14 +63,13 @@ static void	last_child(t_command *command, t_info *info)
 static void	other_childs(t_command *command, t_info *info)
 {
 	int		*fd;
-	int		fd_write;
-	int		fd_read;
 
 	fd = info->fd;
-	fd_read = open_read_files(command->infiles, fd[(info->idx) * 2 - 4]);
-	fd_write = open_write_files(command->outfiles, fd[(info->idx) * 2 - 1]);
-	dup2(fd_read, 0);
-	dup2(fd_write, 1);
+	if (get_fds(command, info, fd[(info->idx) * 2 - 4],
+			fd[(info->idx) * 2 - 1]))
+		exit(1);
+	dup2(info->fd_read, 0);
+	dup2(info->fd_write, 1);
 	close_pipe(info);
 	exit(check_what_cmd(command->exprs, info));
 }
