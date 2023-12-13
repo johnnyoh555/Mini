@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 11:29:49 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/13 13:23:53 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/13 21:21:25 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,15 @@ void	signal_readline_handler(int signo)
 	}
 }
 
-void	signal_child_handler(int signo)
-{
-	if (signo == SIGINT)
-		printf("\n");
-	else if (signo == SIGQUIT)
-		printf("Quit : 3\n");
-}
-
 void	signal_heredoc_handler(int signo)
 {
 	if (signo == SIGINT)
-		g_exit_status = 1;
+	{
+		rl_replace_line("", ft_strlen(rl_line_buffer));
+		printf("\n");
+		rl_on_new_line();
+		exit(128 + signo);
+	}
 }
 
 void	signal_setting(void (quit)(int), void (interrupt)(int))

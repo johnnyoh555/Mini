@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   excute.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:00:49 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/13 16:32:43 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/13 21:23:37 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,18 @@ static int	wait_dl(t_info *info)
 	while (i < info->cmd)
 	{
 		if (wait(&status) == info->pid)
+		{
 			if (WIFEXITED(status))
 				ret = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+			{
+				ret = WTERMSIG(status) + 128;
+				if (ret == SIGINT + 128)
+					printf("\n");
+				else if (ret == SIGQUIT + 128)
+					printf("Quit : 3\n");
+			}
+		}
 		i++;
 	}
 	return (ret);
@@ -83,7 +93,7 @@ int	execute(t_command *command, t_info *info)
 		info->exit_code = single_cmd(command, info);
 		if (info->exit_code != -1)
 			return (info->exit_code);
-		signal_setting(signal_child_handler, signal_child_handler);
+		signal_setting(SIG_IGN, SIG_IGN);
 		info->exit_code = wait_dl(info);
 		signal_setting(SIG_IGN, signal_readline_handler);
 		return (info->exit_code);
@@ -96,7 +106,7 @@ int	execute(t_command *command, t_info *info)
 		info->idx++;
 	}
 	close_pipe(info);
-	signal_setting(signal_child_handler, signal_child_handler);
+	signal_setting(SIG_IGN, SIG_IGN);
 	info->exit_code = wait_dl(info);
 	signal_setting(SIG_IGN, signal_readline_handler);
 	return (info->exit_code);

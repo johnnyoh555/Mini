@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:35:55 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/13 14:23:50 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/13 19:02:18 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,13 @@ int	main(int argc, char **argv, char **envp)
 	signal_setting(SIG_IGN, signal_readline_handler);
 	while (1)
 	{
-		str = readline("minishell> \033[s");
+		str = readline("minishell> ");
 		if (!str)
 			break ;
 		if (parse_str(str, &info) == 0)
 			add_history(str);
 		free(str);
 	}
-	printf("\033[u\033[1B\033[1Aexit\n");
+	printf("\033[1A\033[11Cexit\n");
 	return (0);
 }
