@@ -6,36 +6,35 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 17:14:09 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/12 16:13:32 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/12 17:10:14 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	delete_env(t_info *info, char *arg)
+static void	delete_env(t_info *info, char *arg, int flag, int size)
 {
-	int		size;
 	int		idx;
 	char	**new_ev;
-	int		i;
 	int		len;
 
 	len = ft_strlen(arg);
-	size = 0;
 	idx = -1;
-	i = 0;
 	while (info->envp[size])
 		size++;
 	new_ev = ft_calloc(sizeof(char *), (size));
 	while (++idx < size - 1)
 	{
-		if (!ft_strncmp(arg, info->envp[idx + i], len + 1))
+		if (!ft_strncmp(arg, info->envp[idx + flag], len)
+			&& (info->envp[idx][len] == '=' || info->envp[idx][len] == 0))
 		{
-			free(info->envp[idx + i]);
-			i = 1;
+			free(info->envp[idx + flag]);
+			flag = 1;
+			if (idx == size - 2)
+				break ;
 		}
-		new_ev[idx] = ft_strdup(info->envp[idx + i]);
-		free(info->envp[idx + i]);
+		new_ev[idx] = ft_strdup(info->envp[idx + flag]);
+		free(info->envp[idx + flag]);
 	}
 	free(info->envp);
 	info->envp = new_ev;
@@ -86,7 +85,7 @@ static int	remove_ev(t_info *info, char *arg)
 		return (1);
 	}
 	if (check_same_ev(info->envp, arg))
-		delete_env(info, arg);
+		delete_env(info, arg, 0, 0);
 	return (0);
 }
 

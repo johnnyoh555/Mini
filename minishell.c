@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:35:55 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/12 15:25:55 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/12 18:58:32 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static void	make_envp(t_info *info, char **strs)
 		idx++;
 	}
 	if (flag)
-		envp[idx] = ft_strdup("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
+		envp[idx]
+			= ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
 	info->envp = envp;
 }
 
