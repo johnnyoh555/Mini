@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:19:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/13 22:11:47 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/13 22:20:30 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,5 +199,8 @@ int			extend_env(t_command *command, t_info *info);
 
 // excute/change_env.c
 char		*change_env(char *str, t_info *info);
+
+// excute/remove_quotes.c
+char		*remove_quote(char *str);
 
 #endif

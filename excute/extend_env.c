@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 17:22:34 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/13 20:58:07 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/13 22:20:46 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static int	check_env_cmd(char **cmd, t_info *info)
 			cmd[idx] = change_env(cmd[idx], info);
 		if (ft_strlen(cmd[0]) == 0)
 			return (1);
+		cmd[idx] = remove_quote(cmd[idx]);
 		idx++;
 	}
 	return (0);
@@ -63,7 +64,7 @@ int	extend_env(t_command *command, t_info *info)
 {
 	while (command)
 	{
-		if(check_env_cmd(command->exprs, info))
+		if (check_env_cmd(command->exprs, info))
 		{
 			info->exit_code = 0;
 			return (1);
