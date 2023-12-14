@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 17:22:34 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/14 15:18:28 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/14 15:32:30 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ static int	check_env_cmd(t_command *command, t_info *info)
 	{
 		if (ft_strchr(command->exprs[idx], '$'))
 			command->exprs[idx] = change_env(command->exprs[idx], info);
+		if (ft_strlen(command->exprs[0]) == 0)
+			return (1);
 		if (ft_strlen(command->exprs[idx]) == 0)
 		{
 			erase_vector(&command->exprs, idx, 0, 0);
 			continue ;
 		}
-		if (ft_strlen(command->exprs[0]) == 0)
-			return (1);
 		command->exprs[idx] = remove_quote(command->exprs[idx]);
 		idx++;
 	}
