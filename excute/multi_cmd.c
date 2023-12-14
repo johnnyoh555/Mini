@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:00:06 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/13 17:46:26 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/14 14:20:06 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static void	first_child(t_command *command, t_info *info)
 	dup2(info->fd_read, 0);
 	dup2(info->fd_write, 1);
 	close_pipe(info);
+	if (command->exprs == 0)
+		exit(0);
 	exit(check_what_cmd(command->exprs, info));
 }
 
@@ -57,6 +59,8 @@ static void	last_child(t_command *command, t_info *info)
 	dup2(info->fd_read, 0);
 	dup2(info->fd_write, 1);
 	close_pipe(info);
+	if (command->exprs == 0)
+		exit(0);
 	exit(check_what_cmd(command->exprs, info));
 }
 
@@ -71,6 +75,8 @@ static void	other_childs(t_command *command, t_info *info)
 	dup2(info->fd_read, 0);
 	dup2(info->fd_write, 1);
 	close_pipe(info);
+	if (command->exprs == 0)
+		exit(0);
 	exit(check_what_cmd(command->exprs, info));
 }
 

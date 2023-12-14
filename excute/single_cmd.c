@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 17:32:32 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/13 20:10:12 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/14 15:03:53 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,25 @@ static int	single_simple_cmd(t_command *command, t_info *info)
 		exit(1);
 	dup2(info->fd_read, 0);
 	dup2(info->fd_write, 1);
+	if (command->exprs == 0)
+		exit(0);
 	path = cmd_path(info, command->exprs, 0);
 	if (execve(path, command->exprs, info->envp) == -1)
 		err_seq(command->exprs[0], 0, 126, 0);
 	free(path);
-	return (0);
+	exit(0);
 }
 
 int	single_cmd(t_command *command, t_info *info)
 {
-	if (strncmp(command->exprs[0], "env", 4) == 0
-		|| strncmp(command->exprs[0], "unset", 6) == 0
-		|| strncmp(command->exprs[0], "export", 7) == 0
-		|| strncmp(command->exprs[0], "echo", 5) == 0
-		|| strncmp(command->exprs[0], "cd", 3) == 0
-		|| strncmp(command->exprs[0], "pwd", 4) == 0
-		|| strncmp(command->exprs[0], "exit", 5) == 0)
+	if ((command->exprs != 0)
+		&& (strncmp(command->exprs[0], "env", 4) == 0
+			|| strncmp(command->exprs[0], "unset", 6) == 0
+			|| strncmp(command->exprs[0], "export", 7) == 0
+			|| strncmp(command->exprs[0], "echo", 5) == 0
+			|| strncmp(command->exprs[0], "cd", 3) == 0
+			|| strncmp(command->exprs[0], "pwd", 4) == 0
+			|| strncmp(command->exprs[0], "exit", 5) == 0))
 		return (single_builtin_cmd(command, info));
 	else
 		single_simple_cmd(command, info);

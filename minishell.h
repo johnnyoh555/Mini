@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:19:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/13 22:20:30 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/14 15:17:36 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ void		print_command_list(t_command *list);
 // excute/utils.c
 int			err_seq(char *str, char *err, int ex, int flag);
 int			ft_strcmp(const char *s1, const char *s2);
+void		erase_vector(char ***arr, int i, int size, int flag);
 
 // excute/unset.c
 int			builtin_unset(char **cmd, t_info *info);

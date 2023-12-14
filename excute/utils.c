@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:19:59 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/12 15:30:30 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/14 15:17:17 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,30 @@ int	ft_strcmp(const char *s1, const char *s2)
 		str2++;
 	}
 	return (0);
+}
+
+void	erase_vector(char ***arr, int i, int size, int flag)
+{
+	int		idx;
+	char	**new_ev;
+
+	idx = -1;
+	while ((*arr)[size])
+		size++;
+	new_ev = ft_calloc(sizeof(char *), (size));
+	while (++idx < size - 1)
+	{
+		if (idx == i)
+		{
+			free((*arr)[idx + flag]);
+			(*arr)[idx + flag] = 0;
+			flag = 1;
+			if (idx == size - 2)
+				break ;
+		}
+		new_ev[idx] = ft_strdup((*arr)[idx + flag]);
+		free((*arr)[idx + flag]);
+	}
+	free(*arr);
+	*arr = new_ev;
 }
