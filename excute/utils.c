@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:19:59 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/14 15:17:17 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/14 15:51:03 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,13 @@ void	erase_vector(char ***arr, int i, int size, int flag)
 	while ((*arr)[size])
 		size++;
 	new_ev = ft_calloc(sizeof(char *), (size));
-	while (++idx < size - 1)
+	while (++idx + flag <= size - 1)
 	{
 		if (idx == i)
 		{
-			free((*arr)[idx + flag]);
-			(*arr)[idx + flag] = 0;
+			free((*arr)[idx]); 
 			flag = 1;
-			if (idx == size - 2)
+			if (idx + flag == size)
 				break ;
 		}
 		new_ev[idx] = ft_strdup((*arr)[idx + flag]);
