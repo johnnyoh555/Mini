@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:36:09 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/11 20:40:47 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/14 12:04:38 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,16 @@ char	*parser_utils_get_node_str(t_tokenlst *node)
 
 int	parser_error(t_ptree *tree, t_tokenlst *list)
 {
-	const char	*token = " \t\n;()|&<>";
-
 	if (list == NULL && tree != NULL)
 		return (0);
 	if (list != NULL)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd("syntax error near unexpected token '", 2);
-		if (token[list->type] == '\n')
+		if (list->type == T_NEWLINE)
 			ft_putstr_fd("newline", 2);
 		else
-			ft_putchar_fd(token[list->type], 2);
+			ft_putstr_fd(list->str, 2);
 		ft_putendl_fd("'", 2);
 		tokenizer_list_all_free(&list);
 	}

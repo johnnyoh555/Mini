@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 11:49:50 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/11 20:02:36 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/13 22:15:33 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,11 @@ void	print_command_list(t_command *list)
 			printf("Exprs[%d] : %s\n", idx, list->exprs[idx]);
 		idx = -1;
 		while (list->infiles != NULL && list->infiles[++idx] != NULL)
+		{
+			if (idx % 2 == 0)
+				printf("Inflag[%d] : %d\n", idx / 2, list->inflag[idx / 2]);
 			printf("Infiles[%d] : %s\n", idx, list->infiles[idx]);
+		}
 		idx = -1;
 		while (list->outfiles != NULL && list->outfiles[++idx] != NULL)
 			printf("Outfiles[%d] : %s\n", idx, list->outfiles[idx]);
