@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 16:43:17 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/12 15:29:54 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/14 17:19:51 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,13 @@ static void	add_new_env(t_info *info, char *arg)
 	while (info->envp[size])
 		size++;
 	new_ev = ft_calloc(sizeof(char *), (size + 2));
-	while (idx < size - 1)
+	while (idx < size && info->envp[idx])
 	{
 		new_ev[idx] = ft_strdup(info->envp[idx]);
 		free(info->envp[idx]);
 		idx++;
 	}
 	new_ev[idx] = ft_strdup(arg);
-	new_ev[idx + 1] = ft_strdup(info->envp[idx]);
-	free(info->envp[idx]);
 	free(info->envp);
 	info->envp = new_ev;
 }

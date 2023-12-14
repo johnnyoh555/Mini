@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 17:32:32 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/14 15:03:53 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/14 16:35:13 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ char	*cmd_path(t_info *info, char **cmd, int idx)
 	if (ft_strchr(ret, '/') && access(ret, R_OK) == 0)
 		return (ret);
 	free(ret);
+	if (!ft_strlen(cmd[0]))
+		err_seq(cmd[0], "command not found", 127, 0);
 	if (ft_strchr(cmd[0], '/'))
 		err_seq(cmd[0], 0, 127, 0);
 	str = ft_strjoin("/", cmd[0]);

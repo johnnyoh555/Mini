@@ -6,43 +6,44 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 17:22:34 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/14 15:35:53 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/14 16:29:17 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	check_env_outfiles(t_command *command, t_info *info)
-{
-	int	idx;
+// static void	check_env_outfiles(t_command *command, t_info *info)
+// {
+// 	int	idx;
 
-	idx = 0;
-	if (command->outfiles == 0)
-		return ;
-	while (command->outfiles[idx])
-	{
-		if (ft_strchr(command->outfiles[idx + 1], '$'))
-			command->outfiles[idx + 1]
-				= change_env(command->outfiles[idx], info);
-		idx += 2;
-	}
-}
+// 	idx = 0;
+// 	if (command->outfiles == 0)
+// 		return ;
+// 	while (command->outfiles[idx])
+// 	{
+// 		if (ft_strchr(command->outfiles[idx + 1], '$'))
+// 			command->outfiles[idx + 1]
+// 				= change_env(command->outfiles[idx + 1], info);
+// 		idx += 2;
+// 	}
+// }
 
-static void	check_env_infiles(t_command *command, t_info *info)
-{
-	int	idx;
+// static void	check_env_infiles(t_command *command, t_info *info)
+// {
+// 	int	idx;
 
-	idx = 0;
-	if (command->infiles == 0)
-		return ;
-	while (command->infiles[idx])
-	{
-		if (!ft_strncmp(command->infiles[idx], "<", 2)
-			&& ft_strchr(command->infiles[idx + 1], '$'))
-			command->infiles[idx + 1] = change_env(command->infiles[idx], info);
-		idx += 2;
-	}
-}
+// 	idx = 0;
+// 	if (command->infiles == 0)
+// 		return ;
+// 	while (command->infiles[idx])
+// 	{
+// 		if (!ft_strncmp(command->infiles[idx], "<", 2)
+// 			&& ft_strchr(command->infiles[idx + 1], '$'))
+// 			command->infiles[idx + 1]
+// 				= change_env(command->infiles[idx + 1], info);
+// 		idx += 2;
+// 	}
+// }
 
 static int	check_env_cmd(t_command *command, t_info *info)
 {
@@ -62,6 +63,7 @@ static int	check_env_cmd(t_command *command, t_info *info)
 			erase_vector(&command->exprs, idx, 0, 0);
 			continue ;
 		}
+		// command->exprs[idx] = wildcard_ex();
 		command->exprs[idx] = remove_quote(command->exprs[idx]);
 		idx++;
 	}
@@ -77,8 +79,6 @@ int	extend_env(t_command *command, t_info *info)
 			info->exit_code = 0;
 			return (1);
 		}
-		check_env_infiles(command, info);
-		check_env_outfiles(command, info);
 		command = command->next;
 	}
 	return (0);

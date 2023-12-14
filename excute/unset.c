@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 17:14:09 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/14 15:51:50 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/14 17:14:16 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ static void	delete_env(t_info *info, char *arg, int flag, int size)
 	while (info->envp[size])
 		size++;
 	new_ev = ft_calloc(sizeof(char *), (size));
-	while (++idx + flag <= size - 1)
+	while (++idx + flag <= size - 1 && info->envp[idx])
 	{
-		if (!ft_strncmp(arg, info->envp[idx + flag], len)
+		if (!ft_strncmp(arg, info->envp[idx], len)
 			&& (info->envp[idx][len] == '=' || info->envp[idx][len] == 0))
 		{
-			free(info->envp[idx + flag]);
+			free(info->envp[idx]);
 			flag = 1;
 			if (idx + flag == size)
 				break ;
