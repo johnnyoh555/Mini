@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:19:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/14 15:17:36 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/15 18:39:47 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,17 @@ void		signal_readline_handler(int signo);
 void		signal_heredoc_handler(int signo);
 void		signal_setting(void (quit)(int), void (interrupt)(int));
 
+void		delete_heredoc_files(t_command *cmd);
+int			create_heredoc(t_command *cmd, t_info *info);
+
+int			get_str_max_length(char *s1, char *s2);
+char		*make_heredoc_file_name(void);
+char		*make_limiter(t_command *cmd, int idx);
+
+char		*heredoc_change_env(char *str, t_info *info);
+
+int			heredoc_search(t_ptree *tree, t_info *info, int flag);
+
 void		print_parser_tree(t_ptree *tree, int flag);
 void		print_token_list(t_tokenlst *list);
 void		print_command_list(t_command *list);
@@ -184,6 +195,7 @@ int			builtin_exit(char **cmd, t_info *info);
 // excute/excute.c
 int			execute(t_command *command, t_info *info);
 void		close_pipe(t_info *info);
+void		end_seq(t_info *info);
 
 // excute/echo.c
 int			builtin_echo(char **cmd, t_info *info);
@@ -199,6 +211,9 @@ char		*env_to_str(t_info *info, char *str, char *ret, int len);
 int			extend_env(t_command *command, t_info *info);
 
 // excute/change_env.c
+char		*cpy_env_str(t_info *info, char *str, char *ret, int len);
+char		*cpy_normal_str(char *str, char *ret, int len);
+int			return_env_len(char *str);
 char		*change_env(char *str, t_info *info);
 
 // excute/remove_quotes.c

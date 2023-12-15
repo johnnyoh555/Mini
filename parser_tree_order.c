@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tree_order.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 20:28:58 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/13 21:16:08 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/15 17:31:57 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,28 @@ int	excute_cmd(t_command *cmd, t_info *info)
 		return (1);
 	// erase_quotes();
 	// extend_wildcard();
-	// creat_heredoc();
-	// if ()
-	// 	return (-1);
 	ret = execute(cmd, info);
+	end_seq(info);
 	if (ret)
 		return (1);
 	return (0);
+}
+
+int	parser_tree_excutable(t_ptree *tree, t_command *cmd, t_info *info)
+{
+	int	ret;
+
+	ret = 0;
+	if (cmd != NULL)
+	{
+		ret = excute_cmd(cmd, info);
+		command_list_all_free(cmd);
+		if (tree->expr != NULL && \
+			((ret == 0 && ft_strncmp("||", tree->expr, 3) == 0) || \
+			(ret != 0 && ft_strncmp("&&", tree->expr, 3) == 0)))
+			ret = 1;
+	}
+	return (ret);
 }
 
 void	parser_tree_left_search(t_ptree *tree, t_command **cmd, t_info *info)
@@ -80,15 +95,9 @@ void	parser_tree_order(t_ptree *tree, t_command **pcmd, t_info *info)
 		parser_tree_left_search(tree, pcmd, info);
 	if (tree->type == P_CMD)
 	{
-		if (cmd != NULL)
-		{
-			ret = excute_cmd(cmd, info);
-			command_list_all_free(cmd);
-			if (tree->expr != NULL && \
-				((ret == 0 && ft_strncmp("||", tree->expr, 3) == 0) || \
-				(ret != 0 && ft_strncmp("&&", tree->expr, 3) == 0)))
-				return ;
-		}
+		ret = parser_tree_excutable(tree, cmd, info);
+		if (ret == 1)
+			return ;
 		parser_tree_order(tree->right, &cmd, info);
 	}
 	else

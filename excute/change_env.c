@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   change_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 18:07:47 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/13 20:26:10 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/15 13:23:29 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*cpy_env_str(t_info *info, char *str, char *ret, int len)
+char	*cpy_env_str(t_info *info, char *str, char *ret, int len)
 {
 	char	*exit_code;
 	char	*tmp;
@@ -32,7 +32,7 @@ static char	*cpy_env_str(t_info *info, char *str, char *ret, int len)
 	return (env_to_str(info, str + 1, ret, len - 1));
 }
 
-static char	*cpy_normal_str(char *str, char *ret, int len)
+char	*cpy_normal_str(char *str, char *ret, int len)
 {
 	char	*normal;
 	char	*tmp;
@@ -65,7 +65,7 @@ static int	return_str_len(char *str, int *d_flag, int *s_flag)
 	return (len);
 }
 
-static int	return_env_len(char *str)
+int	return_env_len(char *str)
 {
 	int	len;
 

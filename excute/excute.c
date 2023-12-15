@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:00:49 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/13 21:23:37 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/15 16:08:14 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,22 @@ static int	wait_dl(t_info *info)
 	return (ret);
 }
 
-// static void	end_seq(t_info *info)
-// {
-// 	int	i;
+void	end_seq(t_info *info)
+{
+	int	i;
 
-// 	i = -1;
-// 	if (info->path)
-// 	{
-// 		while ((info->path)[++i])
-// 			free((info->path)[i]);
-// 		free(info->path);
-// 	}
-// 	free(info->fd);
-// }
+	i = -1;
+	if (info->path)
+	{
+		while (info->path[++i])
+			free(info->path[i]);
+		free(info->path);
+	}
+	info->path = 0;
+	if (info->fd)
+		free(info->fd);
+	info->fd = 0;
+}
 
 int	execute(t_command *command, t_info *info)
 {

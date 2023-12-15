@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:35:55 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/13 19:02:18 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:42:14 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static void	make_envp(t_info *info, char **strs)
 	int		flag;
 
 	len = 0;
+	info->fd = 0;
+	info->path = 0;
 	while (strs[len] != NULL)
 		len++;
 	flag = check_if_path(strs);
@@ -52,23 +54,24 @@ static void	make_envp(t_info *info, char **strs)
 
 static int	parse_str(char *str, t_info *info)
 {
-	int			ret;
 	t_tokenlst	*list;
 	t_ptree		*tree;
 
-	ret = 1;
+	if (*str == '\0')
+		return (1);
 	list = tokenizer_parse(str);
 	if (list != NULL)
 	{
 		tree = parser_cmd(&list);
 		if (parser_error(tree, list) == 0)
 		{
-			parser_tree_order(tree, NULL, info);
-			ret = 0;
+			if (heredoc_search(tree, info, 0) == 0)
+				parser_tree_order(tree, NULL, info);
+			heredoc_search(tree, info, 1);
 		}
 		parser_tree_all_free(tree);
 	}
-	return (ret);
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
