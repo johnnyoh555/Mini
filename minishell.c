@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:35:55 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/16 15:38:52 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/16 21:24:09 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	make_envp(&info, envp);
+	rl_event_hook = signal_cursor_save;
 	signal_setting(SIG_IGN, signal_readline_handler);
 	while (1)
 	{
@@ -96,6 +97,6 @@ int	main(int argc, char **argv, char **envp)
 			add_history(str);
 		free(str);
 	}
-	printf("\033[1A\033[11Cexit\n");
-	return (0);
+	printf("\033[uexit\n");
+	exit(info.exit_code);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tree_order.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 20:28:58 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/16 16:51:00 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/16 20:00:55 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ int	excute_cmd(t_command *cmd, t_info *info)
 		return (1);
 	ret = execute(cmd, info);
 	end_seq(info);
-	if (ret)
-		return (1);
-	return (0);
+	return (ret);
 }
 
 int	parser_tree_excutable(t_ptree *tree, t_command *cmd, t_info *info)
@@ -61,8 +59,8 @@ int	parser_tree_excutable(t_ptree *tree, t_command *cmd, t_info *info)
 		ret = excute_cmd(cmd, info);
 		command_list_all_free(cmd);
 		if (tree->expr != NULL && \
-			((ret == 0 && ft_strncmp("||", tree->expr, 3) == 0) || \
-			(ret != 0 && ft_strncmp("&&", tree->expr, 3) == 0)))
+			((ret == 0 && !ft_strncmp("||", tree->expr, 3)) || \
+			(ret != 0 && !ft_strncmp("&&", tree->expr, 3))))
 			ret = 1;
 	}
 	return (ret);
