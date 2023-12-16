@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:19:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/16 15:38:46 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/16 16:48:08 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,8 +222,14 @@ char		*remove_quote(char *str, int flag);
 
 // excute/wc_and_quotes.c
 void		wc_and_quotes(t_command *cmd, int *idx);
+int			wc_and_quotes_for_files(char **file, int f_nbr);
 
 // excute/check_wc_arr.c
 int			check_with_arr(t_command *command, char **arr, int *idx);
+int			make_wc_arr(DIR *dir, char **arr, char ***wc);
+
+// excute/file_wc_env.c
+int			check_file_name_with_arr(char **file, int f_nbr, char **arr);
+int			check_file_name(t_info *info, char **file, int f_nbr);
 
 #endif

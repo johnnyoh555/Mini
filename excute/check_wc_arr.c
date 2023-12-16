@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 14:21:50 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/16 15:20:39 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/16 16:44:31 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static char	**make_wc_to_arr(char *name, char **wc)
 	return (ret);
 }
 
-static int	make_wc_arr(DIR *dir, char **arr, char ***wc)
+int	make_wc_arr(DIR *dir, char **arr, char ***wc)
 {
 	int				cnt;
 	struct dirent	*dp;
@@ -110,6 +110,7 @@ static void	add_wc_to_cmd(t_command *command, char **wc, int idx, int size)
 		tmp[cmd_size + wc_size] = command->exprs[cmd_size];
 	}
 	free(command->exprs);
+	free(wc);
 	command->exprs = tmp;
 }
 

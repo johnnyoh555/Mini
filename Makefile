@@ -5,7 +5,7 @@ SRCS = minishell.c tokenizer.c tokenizer_list.c parser_tree.c parser.c parser_ut
 ./excute/exit.c ./excute/export_no_arg.c ./excute/export_with_arg.c ./excute/multi_cmd.c \
 ./excute/openfiles.c ./excute/pwd.c ./excute/single_cmd.c ./excute/unset.c ./excute/utils.c \
 ./excute/extend_env.c ./excute/change_env.c ./excute/remove_quote.c ./excute/wc_and_quotes.c \
-./excute/check_wc_arr.c
+./excute/check_wc_arr.c ./excute/file_wc_env.c
 OBJS = $(SRCS:.c=.o)
 NAME = minishell
 LIBFT_DIR = libft

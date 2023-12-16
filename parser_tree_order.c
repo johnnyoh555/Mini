@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tree_order.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 20:28:58 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/15 17:31:57 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/16 16:51:00 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ int	excute_cmd(t_command *cmd, t_info *info)
 	init_info(cmd, info);
 	if (extend_env(cmd, info))
 		return (1);
-	// erase_quotes();
-	// extend_wildcard();
 	ret = execute(cmd, info);
 	end_seq(info);
 	if (ret)

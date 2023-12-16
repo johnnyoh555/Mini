@@ -6,44 +6,11 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 17:22:34 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/16 15:15:54 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/16 16:46:33 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// static void	check_env_outfiles(t_command *command, t_info *info)
-// {
-// 	int	idx;
-
-// 	idx = 0;
-// 	if (command->outfiles == 0)
-// 		return ;
-// 	while (command->outfiles[idx])
-// 	{
-// 		if (ft_strchr(command->outfiles[idx + 1], '$'))
-// 			command->outfiles[idx + 1]
-// 				= change_env(command->outfiles[idx + 1], info);
-// 		idx += 2;
-// 	}
-// }
-
-// static void	check_env_infiles(t_command *command, t_info *info)
-// {
-// 	int	idx;
-
-// 	idx = 0;
-// 	if (command->infiles == 0)
-// 		return ;
-// 	while (command->infiles[idx])
-// 	{
-// 		if (!ft_strncmp(command->infiles[idx], "<", 2)
-// 			&& ft_strchr(command->infiles[idx + 1], '$'))
-// 			command->infiles[idx + 1]
-// 				= change_env(command->infiles[idx + 1], info);
-// 		idx += 2;
-// 	}
-// }
 
 static int	check_env_cmd(t_command *command, t_info *info)
 {

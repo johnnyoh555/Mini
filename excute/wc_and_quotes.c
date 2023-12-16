@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wildcard.c                                         :+:      :+:    :+:   */
+/*   wc_and_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 17:04:21 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/16 14:29:46 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/16 16:43:25 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,31 @@ void	wc_and_quotes(t_command *cmd, int *idx)
 	while (arr[++i])
 		free(arr[i]);
 	free(arr);
+}
+
+int	wc_and_quotes_for_files(char **file, int f_nbr)
+{
+	char	**arr;
+	int		i;
+	int		flag;
+
+	flag = 0;
+	arr = wc_checker(file[f_nbr], 0);
+	if (arr[0][0] != '*' && arr[1] == 0)
+		file[f_nbr] = remove_quote(file[f_nbr], 1);
+	else
+	{
+		flag = check_file_name_with_arr(file, f_nbr, arr);
+		if (flag == -1)
+			file[f_nbr] = remove_quote(file[f_nbr], 1);
+		if (flag == 1)
+			err_seq(file[f_nbr], "ambiguous redirect", 1, 1);
+	}
+	i = -1;
+	while (arr[++i])
+		free(arr[i]);
+	free(arr);
+	if (flag == 1)
+		return (1);
+	return (0);
 }
