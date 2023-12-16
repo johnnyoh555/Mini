@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:19:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/15 18:39:47 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/16 15:21:28 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,7 @@ int			make_ev(t_info *info, char *arg);
 
 // excute/export_no_arg.c
 int			builtin_export(char **cmd, t_info *info);
+void		sort_by_ascii(char **envp, int size);
 
 // excute/exit.c
 int			builtin_exit(char **cmd, t_info *info);
@@ -217,6 +218,12 @@ int			return_env_len(char *str);
 char		*change_env(char *str, t_info *info);
 
 // excute/remove_quotes.c
-char		*remove_quote(char *str);
+char		*remove_quote(char *str, int flag);
+
+// excute/wc_and_quotes.c
+void		wc_and_quotes(t_command *cmd, int *idx);
+
+// excute/check_wc_arr.c
+int			check_with_arr(t_command *command, char **arr, int *idx);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 14:34:24 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/12 15:39:08 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/16 15:19:25 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static char	**ft_duparr(char **envp)
 	return (ret);
 }
 
-static void	sort_by_ascii(char **envp, int size)
+void	sort_by_ascii(char **envp, int size)
 {
 	char	*tmp;
 	int		i;

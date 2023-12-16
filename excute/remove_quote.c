@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 21:45:54 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/13 22:36:53 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/15 13:10:55 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void	copy_without_quotes(char **str, char **ret, int flag)
 	}
 }
 
-char	*remove_quote(char *str)
+char	*remove_quote(char *str, int flag)
 {
 	int		quotes;
 	char	*ret;
@@ -98,6 +98,7 @@ char	*remove_quote(char *str)
 		else
 			copy_without_quotes(&str, &ret, 1);
 	}
-	free(str_tmp);
+	if (flag)
+		free(str_tmp);
 	return (ret_tmp);
 }

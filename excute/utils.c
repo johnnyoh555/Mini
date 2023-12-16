@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:19:59 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/14 15:51:03 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/16 15:16:35 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	erase_vector(char ***arr, int i, int size, int flag)
 	{
 		if (idx == i)
 		{
-			free((*arr)[idx]); 
+			free((*arr)[idx]);
 			flag = 1;
 			if (idx + flag == size)
 				break ;
