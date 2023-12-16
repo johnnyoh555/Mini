@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 16:31:41 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/12 15:57:42 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/16 19:38:19 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static int	check_nflag(char *arg)
 	if (*arg != '-')
 		return (0);
 	arg++;
+	if (*arg != 'n')
+		return (0);
 	while (*arg)
 	{
 		if (*arg != 'n')
@@ -55,9 +57,9 @@ int	builtin_echo(char **cmd, t_info *info)
 		printf("\n");
 		return (0);
 	}
-	if (check_nflag(cmd[1]))
+	while (cmd[idx] && check_nflag(cmd[idx]))
 	{
-		idx = 2;
+		idx++;
 		flag = 1;
 	}
 	put_echo_arg(cmd, idx, flag);

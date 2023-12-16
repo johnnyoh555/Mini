@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 12:15:57 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/12 19:00:27 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/16 19:29:21 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,17 +100,19 @@ int	builtin_exit(char **cmd, t_info *info)
 	{
 		if (info->cmd == 1)
 			ft_putstr_fd("exit\n", 2);
-		exit(0);
+		exit(info->exit_code);
 	}
 	ft_atoll(info, cmd[1]);
 	while (cmd[idx])
 		idx++;
 	if (idx != 2)
 	{
-		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		if (info->cmd == 1)
 			ft_putstr_fd("exit\n", 2);
+		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+		return (1);
 	}
-	right_exit(info, ft_atoll(info, cmd[idx]));
+	else
+		right_exit(info, ft_atoll(info, cmd[1]));
 	return (0);
 }
