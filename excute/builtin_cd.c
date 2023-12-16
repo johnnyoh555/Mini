@@ -3,44 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 18:34:26 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/13 14:23:26 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/16 21:51:15 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-static void	make_o_pwd(t_info *info, char *o_pwd)
-{
-	int		size;
-	int		idx;
-	char	**new_ev;
-
-	size = 0;
-	idx = 0;
-	while (info->envp[size])
-		size++;
-	new_ev = ft_calloc(sizeof(char *), (size + 2));
-	while (idx < size - 1)
-	{
-		new_ev[idx] = ft_strdup(info->envp[idx]);
-		free(info->envp[idx]);
-		idx++;
-	}
-	new_ev[idx] = ft_strjoin("OLDPWD=", o_pwd);
-	new_ev[idx + 1] = ft_strdup(info->envp[idx]);
-	free(info->envp[idx]);
-	free(info->envp);
-	info->envp = new_ev;
-}
 
 static void	change_o_pwd(t_info *info, char *o_pwd)
 {
 	int	idx;
 
 	idx = 0;
+	if (o_pwd == 0)
+		o_pwd = ft_strdup("");
 	while (info->envp[idx])
 	{
 		if (ft_strncmp(info->envp[idx], "OLDPWD", 6) == 0
@@ -48,22 +26,40 @@ static void	change_o_pwd(t_info *info, char *o_pwd)
 		{
 			free(info->envp[idx]);
 			info->envp[idx] = ft_strjoin("OLDPWD=", o_pwd);
-			free(o_pwd);
-			return ;
+			break ;
 		}
 		idx++;
 	}
-	make_o_pwd(info, o_pwd);
 	free(o_pwd);
 	return ;
 }
 
-static void	change_pwd(t_info *info, char *n_pwd, char *o_pwd)
+static char	*make_pwd(t_info *info, char *cmd)
+{
+	char	*ret;
+	char	*tmp;
+
+	if (info->pwd == 0)
+		info->pwd = ft_strdup("");
+	tmp = ft_strjoin(info->pwd, "/");
+	ret = ft_strjoin(tmp, cmd);
+	free(tmp);
+	return (ret);
+}
+
+static void	change_pwd(t_info *info, char *n_pwd, char *o_pwd, char *cmd)
 {
 	int	idx;
 
 	idx = 0;
 	change_o_pwd(info, o_pwd);
+	if (n_pwd == 0 && cmd)
+	{
+		ft_putstr_fd("cd: error retrieving current directory: getcwd: ", 2);
+		ft_putstr_fd("cannot access parent directories:", 2);
+		ft_putstr_fd(" No such file or directory", 2);
+		n_pwd = make_pwd(info, cmd);
+	}
 	while (info->envp[idx])
 	{
 		if (ft_strncmp(info->envp[idx], "PWD", 3) == 0
@@ -71,12 +67,13 @@ static void	change_pwd(t_info *info, char *n_pwd, char *o_pwd)
 		{
 			free(info->envp[idx]);
 			info->envp[idx] = ft_strjoin("PWD=", n_pwd);
-			free(n_pwd);
-			return ;
+			break ;
 		}
 		idx++;
 	}
-	free(n_pwd);
+	if (info->pwd)
+		free(info->pwd);
+	info->pwd = n_pwd;
 }
 
 static int	move_to_home(t_info *info)
@@ -99,12 +96,12 @@ static int	move_to_home(t_info *info)
 				return (err_seq("cd", 0, 1, 1));
 			}
 			free(home);
-			change_pwd(info, getcwd(0, 0), o_pwd);
+			change_pwd(info, getcwd(0, 0), o_pwd, 0);
 			return (0);
 		}
 		idx++;
 	}
-	printf("minishell: cd: HOME not set\n");
+	ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 	return (1);
 }
 
@@ -120,9 +117,12 @@ int	builtin_cd(char **cmd, t_info *info)
 		if (chdir(cmd[1]) == -1)
 		{
 			free(o_pwd);
-			return (err_seq("cd", 0, 1, 1));
+			ft_putstr_fd("minishell: cd: ", 2);
+			ft_putstr_fd(cmd[1], 2);
+			ft_putstr_fd(": No such file or directory", 2);
+			return (1);
 		}
-		change_pwd(info, getcwd(0, 0), o_pwd);
+		change_pwd(info, getcwd(0, 0), o_pwd, cmd[1]);
 	}
 	return (0);
 }

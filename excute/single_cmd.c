@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 17:32:32 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/14 16:35:13 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/16 21:13:31 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static int	single_builtin_cmd(t_command *command, t_info *info)
 		close(info->fd_write);
 	dup2(org_read, 0);
 	dup2(org_write, 1);
+	close(org_read);
+	close(org_write);
 	return (ret);
 }
 

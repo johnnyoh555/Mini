@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 11:56:25 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/12 15:30:06 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/16 21:42:25 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ int	builtin_pwd(char **cmd, t_info *info)
 	(void)info;
 	pwd = getcwd(0, 0);
 	if (pwd == 0)
-		return (err_seq("pwd", 0, 1, 1));
+	{
+		printf("%s\n", info->pwd);
+		return (0);
+	}
 	printf("%s\n", pwd);
 	return (0);
 }
