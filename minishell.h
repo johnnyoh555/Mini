@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:19:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/16 15:21:28 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/16 15:38:46 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # include <termios.h>
 # include <term.h>
 # include <fcntl.h>
+
+# define SYNTAX_ERROR_CODE 258
 
 typedef enum e_quote
 {
@@ -109,8 +111,6 @@ typedef struct s_info
 	int		fd_read;
 	int		fd_write;
 }	t_info;
-
-extern int	g_exit_status;
 
 t_tokenlst	*tokenizer_parse(char *str);
 

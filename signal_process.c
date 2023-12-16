@@ -6,13 +6,11 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 11:29:49 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/14 21:17:38 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/16 15:37:16 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	g_exit_status;
 
 void	signal_readline_handler(int signo)
 {

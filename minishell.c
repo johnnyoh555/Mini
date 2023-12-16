@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:35:55 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/15 18:42:14 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/16 15:38:52 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,12 @@ static int	parse_str(char *str, t_info *info)
 				parser_tree_order(tree, NULL, info);
 			heredoc_search(tree, info, 1);
 		}
+		else
+			info->exit_code = SYNTAX_ERROR_CODE;
 		parser_tree_all_free(tree);
 	}
+	else
+		info->exit_code = SYNTAX_ERROR_CODE;
 	return (0);
 }
 
