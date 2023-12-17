@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 18:34:26 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/17 16:16:36 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/17 16:40:46 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	builtin_cd(char **cmd, t_info *info)
 			free(o_pwd);
 			ft_putstr_fd("minishell: cd: ", 2);
 			ft_putstr_fd(cmd[1], 2);
-			ft_putstr_fd(": No such file or directory", 2);
+			ft_putstr_fd(": No such file or directory\n", 2);
 			return (1);
 		}
 		change_pwd(info, getcwd(0, 0), o_pwd, cmd[1]);
