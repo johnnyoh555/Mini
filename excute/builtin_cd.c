@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 18:34:26 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/17 14:27:28 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/17 16:16:36 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	change_pwd(t_info *info, char *n_pwd, char *o_pwd, char *cmd)
 	{
 		ft_putstr_fd("cd: error retrieving current directory: getcwd: ", 2);
 		ft_putstr_fd("cannot access parent directories:", 2);
-		ft_putstr_fd(" No such file or directory", 2);
+		ft_putstr_fd(" No such file or directory\n", 2);
 		n_pwd = make_pwd(info, cmd);
 	}
 	while (info->envp[idx])
