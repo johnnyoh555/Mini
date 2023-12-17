@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:19:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/16 21:33:55 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/17 14:01:41 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,8 @@ char		*make_limiter(t_command *cmd, int idx);
 char		*heredoc_change_env(char *str, t_info *info);
 
 int			heredoc_search(t_ptree *tree, t_info *info, int flag);
+
+void		env_setting(t_info *info);
 
 void		print_parser_tree(t_ptree *tree, int flag);
 void		print_token_list(t_tokenlst *list);

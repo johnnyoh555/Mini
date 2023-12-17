@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:35:55 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/16 21:24:09 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/17 14:14:25 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	make_envp(&info, envp);
+	env_setting(&info);
 	rl_event_hook = signal_cursor_save;
 	signal_setting(SIG_IGN, signal_readline_handler);
 	while (1)
