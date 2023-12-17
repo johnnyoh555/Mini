@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 11:29:49 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/16 20:54:59 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/17 16:07:49 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,6 @@ void	signal_heredoc_handler(int signo)
 		rl_on_new_line();
 		exit(128 + signo);
 	}
-}
-
-int	signal_cursor_save(void)
-{
-	printf("\033[s");
-	return (0);
 }
 
 void	signal_setting(void (quit)(int), void (interrupt)(int))

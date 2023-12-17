@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:19:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/17 15:52:35 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/17 16:07:27 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,6 @@ void		command_list_add_redirection(t_command **list, char *expr);
 
 void		signal_readline_handler(int signo);
 void		signal_heredoc_handler(int signo);
-int			signal_cursor_save(void);
 void		signal_setting(void (quit)(int), void (interrupt)(int));
 
 void		delete_heredoc_files(t_command *cmd);

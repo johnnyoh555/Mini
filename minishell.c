@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:35:55 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/17 14:26:04 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/17 16:09:13 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	make_envp(&info, envp);
 	env_setting(&info);
-	rl_event_hook = signal_cursor_save;
 	signal_setting(SIG_IGN, signal_readline_handler);
 	while (1)
 	{
@@ -99,6 +98,6 @@ int	main(int argc, char **argv, char **envp)
 			add_history(str);
 		free(str);
 	}
-	printf("\033[uexit\n");
+	printf("\033[A\033[11Cexit\n");
 	exit(info.exit_code);
 }
