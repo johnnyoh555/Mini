@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 13:28:59 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/17 14:18:59 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/17 15:59:29 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	check_files(char *name, char **arr)
 		{
 			tmp = remove_quote(arr[idx], 0);
 			if (idx == 0 && ft_strncmp(name, tmp, ft_strlen(tmp)) != 0)
-					name = 0;
+				name = 0;
 			else
 				name = ft_strnstr(name, tmp, ft_strlen(name));
 			if (name == 0)
@@ -60,7 +60,7 @@ static int	check_files(char *name, char **arr)
 		}
 	}
 	if (arr[idx - 1][0] != '*' && *name != 0)
-		return (0);
+		return (check_last_wc(name, arr[idx - 1]));
 	return (1);
 }
 

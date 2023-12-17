@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:19:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/17 14:24:55 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/17 15:52:35 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,6 +231,7 @@ int			wc_and_quotes_for_files(char **file, int f_nbr);
 // excute/check_wc_arr.c
 int			check_with_arr(t_command *command, char **arr, int *idx);
 int			make_wc_arr(DIR *dir, char **arr, char ***wc);
+int			check_last_wc(char *name, char *arr);
 
 // excute/file_wc_env.c
 int			check_file_name_with_arr(char **file, int f_nbr, char **arr);

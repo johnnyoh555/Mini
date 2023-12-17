@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 14:21:50 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/17 14:18:19 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/17 16:04:01 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static int	check_dir(char **arr)
 	while (arr[idx])
 		idx++;
 	idx--;
+	if (idx == 0)
+		return (0);
 	while (arr[idx][idx2])
 	{
 		if (arr[idx][idx2] != '/')
@@ -102,4 +104,18 @@ int	check_with_arr(t_command *command, char **arr, int *idx)
 	}
 	closedir(dir);
 	return (cnt);
+}
+
+int	check_last_wc(char *name, char *arr)
+{
+	while (1)
+	{
+		name = ft_strnstr(name, arr, ft_strlen(name));
+		if (name == 0)
+			return (0);
+		name += ft_strlen(arr);
+		if (*name == 0)
+			return (1);
+	}
+	return (0);
 }
