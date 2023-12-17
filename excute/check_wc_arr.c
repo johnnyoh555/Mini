@@ -6,82 +6,43 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 14:21:50 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/16 16:44:31 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/17 14:18:19 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	check_files(char *name, char **arr)
+static int	check_dir(char **arr)
 {
-	int		idx;
-	char	*tmp;
+	int	idx;
+	int	idx2;
 
 	idx = 0;
+	idx2 = 0;
 	while (arr[idx])
-	{
-		if (arr[idx][0] != '*')
-		{
-			tmp = remove_quote(arr[idx], 0);
-			name = ft_strnstr(name, tmp, ft_strlen(name));
-			if (name == 0)
-			{
-				free(tmp);
-				return (0);
-			}
-			name += ft_strlen(tmp);
-			free(tmp);
-		}
 		idx++;
+	idx--;
+	while (arr[idx][idx2])
+	{
+		if (arr[idx][idx2] != '/')
+			return (0);
+		idx2++;
 	}
-	if (arr[idx - 1][0] != '*' && *name != 0)
-		return (0);
+	free(arr[idx]);
+	arr[idx] = 0;
 	return (1);
-}
-
-static char	**make_wc_to_arr(char *name, char **wc)
-{
-	char	**ret;
-	int		idx;
-
-	idx = 0;
-	while (wc[idx])
-			idx++;
-	ret = ft_calloc(sizeof(char *), idx + 2);
-	idx = 0;
-	while (wc[idx])
-	{
-		ret[idx] = wc[idx];
-		idx++;
-	}
-	ret[idx] = ft_strdup(name);
-	free(wc);
-	return (ret);
 }
 
 int	make_wc_arr(DIR *dir, char **arr, char ***wc)
 {
 	int				cnt;
-	struct dirent	*dp;
 
-	cnt = 0;
-	while (1)
-	{
-		dp = readdir(dir);
-		if (dp == 0)
-			break ;
-		if (check_files(dp->d_name, arr) && dp->d_name[0] != '.')
-		{
-			if (*wc == 0)
-			{
-				*wc = ft_calloc(sizeof(char *), 2);
-				(*wc)[0] = ft_strdup(dp->d_name);
-			}
-			else
-				*wc = make_wc_to_arr(dp->d_name, *wc);
-			cnt++;
-		}
-	}
+	if (check_dir(arr))
+		cnt = make_wc_arr_directory(dir, arr, wc);
+	else if (arr[0][0] == '.')
+		cnt = make_wc_arr_hidden(dir, arr, wc);
+	else
+		cnt = make_wc_arr_normal(dir, arr, wc);
 	return (cnt);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:19:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/17 14:01:41 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/17 14:24:55 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,5 +235,10 @@ int			make_wc_arr(DIR *dir, char **arr, char ***wc);
 // excute/file_wc_env.c
 int			check_file_name_with_arr(char **file, int f_nbr, char **arr);
 int			check_file_name(t_info *info, char **file, int f_nbr);
+
+// excute/make_wc_arr.c
+int			make_wc_arr_normal(DIR *dir, char **arr, char ***wc);
+int			make_wc_arr_hidden(DIR *dir, char **arr, char ***wc);
+int			make_wc_arr_directory(DIR *dir, char **arr, char ***wc);
 
 #endif

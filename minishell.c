@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:35:55 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/17 14:14:25 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/17 14:26:04 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	make_envp(t_info *info, char **strs)
 		envp[idx]
 			= ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
 	info->envp = envp;
+	info->pwd = 0;
 }
 
 static int	parse_str(char *str, t_info *info)

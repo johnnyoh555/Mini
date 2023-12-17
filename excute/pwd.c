@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 11:56:25 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/16 21:42:25 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/17 14:17:03 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ int	builtin_pwd(char **cmd, t_info *info)
 		return (0);
 	}
 	printf("%s\n", pwd);
+	free(pwd);
 	return (0);
 }

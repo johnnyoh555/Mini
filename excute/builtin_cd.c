@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 18:34:26 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/16 21:51:15 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/17 14:27:28 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ static char	*make_pwd(t_info *info, char *cmd)
 	char	*tmp;
 
 	if (info->pwd == 0)
-		info->pwd = ft_strdup("");
-	tmp = ft_strjoin(info->pwd, "/");
+		tmp = ft_strdup("");
+	else
+		tmp = ft_strjoin(info->pwd, "/");
 	ret = ft_strjoin(tmp, cmd);
 	free(tmp);
 	return (ret);
