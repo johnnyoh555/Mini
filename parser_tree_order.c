@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 20:28:58 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/16 20:00:55 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/17 17:10:06 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ int	excute_cmd(t_command *cmd, t_info *info)
 
 	init_info(cmd, info);
 	if (extend_env(cmd, info))
+	{
+		end_seq(info);
 		return (1);
+	}
 	ret = execute(cmd, info);
 	end_seq(info);
 	return (ret);
