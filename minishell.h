@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:19:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/17 16:07:27 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/18 11:26:19 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int			parser_utils_check_type(int type, t_tokenlst *node);
 char		*parser_utils_get_node_str(t_tokenlst *node);
 int			parser_error(t_ptree *tree, t_tokenlst *list);
 
-void		parser_tree_order(t_ptree *tree, t_command **pcmd, t_info *info);
+int			parser_tree_order(t_ptree *tree, t_command **pcmd, t_info *info);
 
 t_command	*command_list_create_node(void);
 void		command_list_add_node(t_command **list, t_command *node);

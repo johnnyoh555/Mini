@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 20:28:58 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/17 17:10:06 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/18 11:26:12 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,43 +62,50 @@ int	parser_tree_excutable(t_ptree *tree, t_command *cmd, t_info *info)
 		ret = excute_cmd(cmd, info);
 		command_list_all_free(cmd);
 		if (tree->expr != NULL && \
-			((ret == 0 && !ft_strncmp("||", tree->expr, 3)) || \
-			(ret != 0 && !ft_strncmp("&&", tree->expr, 3))))
-			ret = 1;
+			ret != 0 && !ft_strncmp("||", tree->expr, 3))
+			ret = 0;
 	}
 	return (ret);
 }
 
-void	parser_tree_left_search(t_ptree *tree, t_command **cmd, t_info *info)
+int	parser_tree_left_search(t_ptree *tree, t_command **cmd, t_info *info)
 {
+	int	ret;
+
+	ret = 0;
 	if (tree->type == P_SUBCMD)
 		command_list_add_node(cmd, command_list_create_node());
 	else if (tree->type == P_REDIRECTION)
 		command_list_add_redirection(cmd, tree->expr);
 	else if (tree->type == P_EXPR)
 		command_list_add_expr(cmd, tree->expr);
-	parser_tree_order(tree->left, cmd, info);
+	ret = parser_tree_order(tree->left, cmd, info);
+	return (ret);
 }
 
-void	parser_tree_order(t_ptree *tree, t_command **pcmd, t_info *info)
+int	parser_tree_order(t_ptree *tree, t_command **pcmd, t_info *info)
 {
 	t_command	*cmd;
 	int			ret;
 
 	cmd = NULL;
+	ret = 0;
 	if (tree == NULL)
-		return ;
+		return (0);
 	if (tree->type == P_CMD)
-		parser_tree_left_search(tree, &cmd, info);
+		ret = parser_tree_left_search(tree, &cmd, info);
 	else
-		parser_tree_left_search(tree, pcmd, info);
+		ret = parser_tree_left_search(tree, pcmd, info);
+	if (ret != 0)
+		return (ret);
 	if (tree->type == P_CMD)
 	{
 		ret = parser_tree_excutable(tree, cmd, info);
-		if (ret == 1)
-			return ;
-		parser_tree_order(tree->right, &cmd, info);
+		if (ret != 0)
+			return (ret);
+		ret = parser_tree_order(tree->right, &cmd, info);
 	}
 	else
-		parser_tree_order(tree->right, pcmd, info);
+		ret = parser_tree_order(tree->right, pcmd, info);
+	return (ret);
 }
