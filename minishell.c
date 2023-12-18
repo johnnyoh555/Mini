@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:35:55 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/17 16:09:13 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/18 14:03:06 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	parse_str(char *str, t_info *info)
 		if (parser_error(tree, list) == 0)
 		{
 			if (heredoc_search(tree, info, 0) == 0)
-				parser_tree_order(tree, NULL, info);
+				parser_tree_order(tree, NULL, info, 0);
 			heredoc_search(tree, info, 1);
 		}
 		else
