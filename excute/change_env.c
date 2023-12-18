@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 18:07:47 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/16 20:22:41 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/18 16:17:56 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ char	*cpy_env_str(t_info *info, char *str, char *ret, int len)
 		{
 			exit_code = ft_itoa(info->exit_code);
 			tmp = ft_strjoin(ret, exit_code);
+			free(exit_code);
 			free(ret);
 			return (tmp);
 		}

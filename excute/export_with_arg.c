@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 16:43:17 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/14 17:19:51 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/18 16:24:55 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,9 @@ int	make_ev(t_info *info, char *arg)
 		return (0);
 	if (check_valid(arg))
 	{
-		printf("minishell: export: %s: not a valid identifier\n", arg);
+		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
 		return (1);
 	}
 	if (check_same_ev(info->envp, arg) == 0)

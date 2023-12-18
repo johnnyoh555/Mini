@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 12:15:57 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/16 19:29:21 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/18 16:10:07 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ static long long	ft_atoll(t_info *info, char *str)
 	while (*str >= '0' && *str <= '9')
 	{
 		value *= 10;
+		value += *str - '0';
 		if (value > 0 && minus == -1)
 			value *= -1;
-		value += *str - '0';
 		str++;
 	}
 	return (value);
