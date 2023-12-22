@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 16:21:10 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/13 22:11:17 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/21 15:40:52 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_command	*command_list_create_node(void)
 	node->infiles = NULL;
 	node->outfiles = NULL;
 	node->inflag = NULL;
+	node->file_cnt = 0;
+	node->file_flag = NULL;
 	node->next = NULL;
 	return (node);
 }
@@ -58,6 +60,7 @@ void	command_list_free_node(t_command *node)
 	command_list_free_strs(node->infiles);
 	command_list_free_strs(node->outfiles);
 	free(node->inflag);
+	free(node->file_flag);
 	free(node);
 }
 

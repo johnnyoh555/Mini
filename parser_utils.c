@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:36:09 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/14 12:04:38 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/21 14:19:47 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	parser_error(t_ptree *tree, t_tokenlst *list)
 	if (list != NULL)
 	{
 		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd("syntax error near unexpected token '", 2);
+		ft_putstr_fd("syntax error near unexpected token `", 2);
 		if (list->type == T_NEWLINE)
 			ft_putstr_fd("newline", 2);
 		else

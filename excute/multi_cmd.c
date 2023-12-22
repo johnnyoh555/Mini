@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multi_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:00:06 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/14 14:20:06 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/21 13:21:35 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,41 +40,15 @@ static int	check_what_cmd(char **cmd, t_info *info)
 	return (0);
 }
 
-static void	first_child(t_command *command, t_info *info)
+static void	child_process(t_command *command, t_info *info, int in, int out)
 {
-	if (get_fds(command, info, 0, (info->fd)[1]))
-		exit (1);
-	dup2(info->fd_read, 0);
-	dup2(info->fd_write, 1);
-	close_pipe(info);
-	if (command->exprs == 0)
-		exit(0);
-	exit(check_what_cmd(command->exprs, info));
-}
-
-static void	last_child(t_command *command, t_info *info)
-{
-	if (get_fds(command, info, (info->fd)[(info->cmd * 2) - 4], 1))
-		exit (1);
-	dup2(info->fd_read, 0);
-	dup2(info->fd_write, 1);
-	close_pipe(info);
-	if (command->exprs == 0)
-		exit(0);
-	exit(check_what_cmd(command->exprs, info));
-}
-
-static void	other_childs(t_command *command, t_info *info)
-{
-	int		*fd;
-
-	fd = info->fd;
-	if (get_fds(command, info, fd[(info->idx) * 2 - 4],
-			fd[(info->idx) * 2 - 1]))
+	if (get_fds(command, info, in, out))
 		exit(1);
 	dup2(info->fd_read, 0);
 	dup2(info->fd_write, 1);
-	close_pipe(info);
+	close(info->fd[0]);
+	close(info->fd[1]);
+	close(info->prev_fd);
 	if (command->exprs == 0)
 		exit(0);
 	exit(check_what_cmd(command->exprs, info));
@@ -82,15 +56,20 @@ static void	other_childs(t_command *command, t_info *info)
 
 void	child(t_command *command, t_info *info)
 {
+	if (pipe(info->fd) == -1)
+		err_seq("pipe", 0, 1, 0);
 	info->pid = fork();
 	if (info->pid == 0)
 	{
 		signal_setting(SIG_DFL, SIG_DFL);
 		if (info->idx == 1)
-			first_child(command, info);
+			child_process(command, info, 0, info->fd[1]);
 		else if (info->idx == info->cmd)
-			last_child(command, info);
+			child_process(command, info, info->prev_fd, 1);
 		else
-			other_childs(command, info);
+			child_process(command, info, info->prev_fd, info->fd[1]);
 	}
+	close(info->prev_fd);
+	close(info->fd[1]);
+	info->prev_fd = info->fd[0];
 }

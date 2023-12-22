@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 16:55:01 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/13 22:11:29 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/21 16:29:15 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,26 +64,32 @@ void	command_list_add_expr(t_command **list, char *expr)
 	node->type = C_CMD;
 }
 
-static int	*command_list_append_inflag(char **strs, int *in)
+static int	*command_list_append_flg(t_command *node, int flag, int val)
 {
-	int		*inflag;
+	int		*dst;
+	int		*src;
 	int		len;
 	int		idx;
 
-	len = 0;
-	while (strs != NULL && strs[len] != NULL)
-		len++;
-	len /= 2;
-	inflag = ft_calloc(len + 1, sizeof(int));
+	len = node->file_cnt;
+	src = node->file_flag;
+	if (flag == 0)
+	{
+		len = 0;
+		while (node->infiles && node->infiles[len])
+			len++;
+		src = node->inflag;
+	}
+	dst = ft_calloc(len + 1, sizeof(int));
 	idx = 0;
 	while (idx < len)
 	{
-		inflag[idx] = in[idx];
+		dst[idx] = src[idx];
 		idx++;
 	}
-	inflag[idx] = 0;
-	free(in);
-	return (inflag);
+	dst[idx] = val;
+	free(src);
+	return (dst);
 }
 
 void	command_list_add_redirection(t_command **list, char *expr)
@@ -105,9 +111,11 @@ void	command_list_add_redirection(t_command **list, char *expr)
 		node->type = C_APPEND;
 	if (node->type == C_INPUT || node->type == C_HEREDOC)
 	{
-		node->inflag = command_list_append_inflag(node->infiles, node->inflag);
+		node->inflag = command_list_append_flg(node, 0, 0);
 		node->infiles = command_list_append_strs(node->infiles, expr);
 	}
 	else
 		node->outfiles = command_list_append_strs(node->outfiles, expr);
+	node->file_flag = command_list_append_flg(node, 1, node->type);
+	node->file_cnt++;
 }

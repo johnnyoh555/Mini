@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 13:22:42 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/17 14:23:01 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/20 11:13:00 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,15 @@ static void	add_shell_level(t_info *info, int idx)
 	char	*str;
 	int		nbr;
 
-	nbr = ft_atoi(ft_strchr(info->envp[idx], '=') + 1);
-	str = ft_itoa(nbr + 1);
+	nbr = ft_atoi(ft_strchr(info->envp[idx], '=') + 1) + 1;
+	if (nbr < 0)
+		nbr = 0;
+	else if (nbr > 1000)
+		nbr = 1;
+	if (nbr == 1000)
+		str = ft_strdup("");
+	else
+		str = ft_itoa(nbr);
 	free(info->envp[idx]);
 	info->envp[idx] = ft_strjoin("SHLVL=", str);
 	free(str);

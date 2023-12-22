@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_wc_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 16:03:37 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/16 16:45:21 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/21 17:55:46 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	check_file_name(t_info *info, char **file, int f_nbr)
 		free(tmp);
 		return (1);
 	}
+	free(tmp);
 	if (wc_and_quotes_for_files(file, f_nbr))
 		return (1);
 	return (0);

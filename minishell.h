@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:19:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/18 17:05:02 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/21 16:13:19 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ typedef struct s_command
 	char				**infiles;
 	int					*inflag;
 	char				**outfiles;
+	int					file_cnt;
+	int					*file_flag;
 	struct s_command	*next;
 }	t_command;
 
@@ -105,7 +107,8 @@ typedef struct s_info
 	char	*pwd;
 	int		idx;
 	int		cmd;
-	int		*fd;
+	int		prev_fd;
+	int		fd[2];
 	pid_t	pid;
 	char	**envp;
 	char	**path;
@@ -114,7 +117,7 @@ typedef struct s_info
 	int		fd_write;
 }	t_info;
 
-t_tokenlst	*tokenizer_parse(char *str);
+t_tokenlst	*tokenizer_parse(char *str, int *flag);
 
 t_tokenlst	*tokenizer_list_create_node(int type, char *str);
 void		tokenizer_list_add_node(t_tokenlst **list, t_tokenlst *node);
@@ -148,6 +151,7 @@ void		command_list_add_redirection(t_command **list, char *expr);
 
 void		signal_readline_handler(int signo);
 void		signal_heredoc_handler(int signo);
+int			signal_check(void);
 void		signal_setting(void (quit)(int), void (interrupt)(int));
 
 void		delete_heredoc_files(t_command *cmd);

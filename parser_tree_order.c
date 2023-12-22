@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 20:28:58 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/18 14:31:20 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/21 17:16:30 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,10 @@ int	parser_tree_order(t_ptree *tree, t_command **pcmd, t_info *info, int ret)
 	if (tree->type == P_CMD)
 	{
 		if (ret == -1 && tree->expr && !ft_strncmp("||", tree->expr, 3))
+		{
+			command_list_all_free(cmd);
 			return (ret);
+		}
 		ret = parser_tree_excutable(tree, cmd, info);
 		if (ret != 0)
 			return (ret);

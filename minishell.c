@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:35:55 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/18 14:03:06 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/22 11:21:48 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static void	make_envp(t_info *info, char **strs)
 	int		flag;
 
 	len = 0;
-	info->fd = 0;
 	info->path = 0;
 	while (strs[len] != NULL)
 		len++;
@@ -57,10 +56,11 @@ static int	parse_str(char *str, t_info *info)
 {
 	t_tokenlst	*list;
 	t_ptree		*tree;
+	int			flag;
 
-	if (*str == '\0')
-		return (1);
-	list = tokenizer_parse(str);
+	if (signal_check() == 1)
+		info->exit_code = 1;
+	list = tokenizer_parse(str, &flag);
 	if (list != NULL)
 	{
 		tree = parser_cmd(&list);
@@ -74,7 +74,7 @@ static int	parse_str(char *str, t_info *info)
 			info->exit_code = SYNTAX_ERROR_CODE;
 		parser_tree_all_free(tree);
 	}
-	else
+	else if (flag)
 		info->exit_code = SYNTAX_ERROR_CODE;
 	return (0);
 }
@@ -94,7 +94,7 @@ int	main(int argc, char **argv, char **envp)
 		str = readline("minishell> ");
 		if (!str)
 			break ;
-		if (parse_str(str, &info) == 0)
+		if (*str != '\0' && parse_str(str, &info) == 0)
 			add_history(str);
 		free(str);
 	}

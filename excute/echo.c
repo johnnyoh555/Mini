@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 16:31:41 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/16 19:38:19 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/21 17:16:20 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	check_nflag(char *arg)
 	return (1);
 }
 
-static void	put_echo_arg(char **arg, int start, int flag)
+static void	put_echo_arg(t_info *info, char **arg, int start, int flag)
 {
 	int	idx;
 
@@ -36,12 +36,12 @@ static void	put_echo_arg(char **arg, int start, int flag)
 	while (arg[idx])
 	{
 		if (idx != start)
-			printf(" ");
-		printf("%s", arg[idx]);
+			ft_putstr_fd(" ", info->fd_write);
+		ft_putstr_fd(arg[idx], info->fd_write);
 		idx++;
 	}
 	if (flag == 0)
-		printf("\n");
+		ft_putstr_fd("\n", info->fd_write);
 }
 
 int	builtin_echo(char **cmd, t_info *info)
@@ -54,7 +54,7 @@ int	builtin_echo(char **cmd, t_info *info)
 	idx = 1;
 	if (cmd[1] == 0)
 	{
-		printf("\n");
+		ft_putstr_fd("\n", info->fd_write);
 		return (0);
 	}
 	while (cmd[idx] && check_nflag(cmd[idx]))
@@ -62,6 +62,6 @@ int	builtin_echo(char **cmd, t_info *info)
 		idx++;
 		flag = 1;
 	}
-	put_echo_arg(cmd, idx, flag);
+	put_echo_arg(info, cmd, idx, flag);
 	return (0);
 }

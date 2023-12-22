@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 11:49:50 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/13 22:15:33 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/21 16:21:16 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ void	print_command_list(t_command *list)
 		idx = -1;
 		while (list->outfiles != NULL && list->outfiles[++idx] != NULL)
 			printf("Outfiles[%d] : %s\n", idx, list->outfiles[idx]);
+		idx = -1;
+		while (++idx < list->file_cnt)
+			printf("file_flag[%d] : %d\n", idx, list->file_flag[idx]);
 		printf("\n");
 		list = list->next;
 	}

@@ -6,42 +6,11 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:00:49 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/15 16:08:14 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/22 11:31:18 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	close_pipe(t_info *info)
-{
-	int	i;
-
-	i = 0;
-	while (i < info->cmd * 2 - 2)
-	{
-		if (close((info->fd)[i]) == -1)
-			err_seq("close", 0, 1, 0);
-		i++;
-	}
-}
-
-static void	im_mario(t_info *info)
-{
-	int	*fd;
-	int	i;
-
-	if (info->cmd == 1)
-		return ;
-	fd = ft_calloc(sizeof(int), ((info->cmd * 2) - 2));
-	info->fd = fd;
-	i = 0;
-	while (i < ((info->cmd * 2) - 2))
-	{
-		if (pipe(fd + i) == -1)
-			err_seq("pipe", 0, 1, 0);
-		i += 2;
-	}
-}
 
 static int	wait_dl(t_info *info)
 {
@@ -83,9 +52,6 @@ void	end_seq(t_info *info)
 		free(info->path);
 	}
 	info->path = 0;
-	if (info->fd)
-		free(info->fd);
-	info->fd = 0;
 }
 
 int	execute(t_command *command, t_info *info)
@@ -101,14 +67,14 @@ int	execute(t_command *command, t_info *info)
 		signal_setting(SIG_IGN, signal_readline_handler);
 		return (info->exit_code);
 	}
-	im_mario(info);
+	info->prev_fd = dup(0);
 	while (info->idx <= info->cmd)
 	{
 		child(command, info);
 		command = command->next;
 		info->idx++;
 	}
-	close_pipe(info);
+	close(info->prev_fd);
 	signal_setting(SIG_IGN, SIG_IGN);
 	info->exit_code = wait_dl(info);
 	signal_setting(SIG_IGN, signal_readline_handler);
