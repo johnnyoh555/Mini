@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 18:07:47 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/22 15:36:16 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/22 20:47:38 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	*change_env(char *str, t_info *info)
 		{
 			len = return_env_len(str);
 			if (*(str + 1) != '"' && *(str + 1) != '\'')
-				ret = cpy_env_str(info, str, ret, len);
+				ret = add_quote(cpy_env_str(info, str, ret, len), d_flag);
 			str += len;
 		}
 	}

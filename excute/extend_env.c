@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 17:22:34 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/16 16:46:33 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/22 20:47:27 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,19 @@ static int	check_env_cmd(t_command *command, t_info *info)
 		wc_and_quotes(command, &idx);
 	}
 	return (0);
+}
+
+char	*add_quote(char *str, int d_flag)
+{
+	char	*tmp;
+
+	if (d_flag == 1)
+		return (str);
+	tmp = ft_strjoin("\"", str);
+	free(str);
+	str = ft_strjoin(tmp, "\"");
+	free(tmp);
+	return (str);
 }
 
 int	extend_env(t_command *command, t_info *info)
