@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 18:07:47 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/22 14:09:24 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/22 15:36:16 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ char	*change_env(char *str, t_info *info)
 		if (*str == '$' && s_flag == 0)
 		{
 			len = return_env_len(str);
-			if (*(str + 1) != '"')
+			if (*(str + 1) != '"' && *(str + 1) != '\'')
 				ret = cpy_env_str(info, str, ret, len);
 			str += len;
 		}

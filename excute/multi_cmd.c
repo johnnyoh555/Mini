@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:00:06 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/22 14:19:35 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/22 15:36:42 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	isdirectory(char *path)
 {
-	struct stat st;
+	struct stat	st;
 
 	if (stat(path, &st) == 0)
 		return (S_ISDIR(st.st_mode));
