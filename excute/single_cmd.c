@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 17:32:32 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/22 12:52:23 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/22 14:21:05 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,12 @@ static int	single_simple_cmd(t_command *command, t_info *info)
 		exit(0);
 	path = cmd_path(info, command->exprs, 0);
 	if (execve(path, command->exprs, info->envp) == -1)
-		err_seq(command->exprs[0], 0, 126, 0);
+	{
+		if (isdirectory(path))
+			err_seq(command->exprs[0], "is a directory", 126, 0);
+		else
+			err_seq(command->exprs[0], 0, 126, 0);
+	}
 	free(path);
 	exit(0);
 }

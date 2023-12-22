@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 12:15:57 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/18 16:10:07 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/22 13:57:41 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	wrong_exit_arg(t_info *info, char *str)
 {
 	if (info->cmd == 1)
-		ft_putstr_fd("exit\n", 2);
+		ft_putstr_fd("exit\n", 1);
 	ft_putstr_fd("minishell: exit: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": numeric argument required\n", 2);
@@ -87,7 +87,7 @@ static void	right_exit(t_info *info, long long arg)
 	if (exit_num < 0)
 		exit_num += 256;
 	if (info->cmd == 1)
-		ft_putstr_fd("exit\n", 2);
+		ft_putstr_fd("exit\n", 1);
 	exit(exit_num);
 }
 
@@ -99,7 +99,7 @@ int	builtin_exit(char **cmd, t_info *info)
 	if (cmd[1] == 0)
 	{
 		if (info->cmd == 1)
-			ft_putstr_fd("exit\n", 2);
+			ft_putstr_fd("exit\n", 1);
 		exit(info->exit_code);
 	}
 	ft_atoll(info, cmd[1]);
@@ -108,7 +108,7 @@ int	builtin_exit(char **cmd, t_info *info)
 	if (idx != 2)
 	{
 		if (info->cmd == 1)
-			ft_putstr_fd("exit\n", 2);
+			ft_putstr_fd("exit\n", 1);
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		return (1);
 	}

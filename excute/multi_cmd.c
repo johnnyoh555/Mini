@@ -6,16 +6,38 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:00:06 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/21 13:21:35 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/22 14:19:35 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	check_what_cmd(char **cmd, t_info *info)
+int	isdirectory(char *path)
+{
+	struct stat st;
+
+	if (stat(path, &st) == 0)
+		return (S_ISDIR(st.st_mode));
+	return (0);
+}
+
+static void	cmd_excute(char **cmd, t_info *info)
 {
 	char	*path;
 
+	path = cmd_path(info, cmd, 0);
+	if (execve(path, cmd, info->envp) == -1)
+	{
+		if (isdirectory(path))
+			err_seq(cmd[0], "is a directory", 126, 0);
+		else
+			err_seq(cmd[0], 0, 126, 0);
+	}
+	free(path);
+}
+
+static int	check_what_cmd(char **cmd, t_info *info)
+{
 	if (strncmp(cmd[0], "env", 4) == 0)
 		return (builtin_env(cmd, info));
 	else if (strncmp(cmd[0], "unset", 6) == 0)
@@ -31,12 +53,7 @@ static int	check_what_cmd(char **cmd, t_info *info)
 	else if (strncmp(cmd[0], "exit", 5) == 0)
 		return (builtin_exit(cmd, info));
 	else
-	{
-		path = cmd_path(info, cmd, 0);
-		if (execve(path, cmd, info->envp) == -1)
-			err_seq(cmd[0], 0, 126, 0);
-		free(path);
-	}
+		cmd_excute(cmd, info);
 	return (0);
 }
 

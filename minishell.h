@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:19:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/22 12:53:09 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/22 14:14:22 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ int			get_fds(t_command *command, t_info *info, int in, int out);
 
 // excute/multi_cmd.c
 void		child(t_command *command, t_info *info);
+int			isdirectory(char *path);
 
 // excute/export_with_arg.c
 int			make_ev(t_info *info, char *arg);

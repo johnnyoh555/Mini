@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 18:07:47 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/20 11:47:00 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/22 14:09:24 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ char	*cpy_env_str(t_info *info, char *str, char *ret, int len)
 		}
 		else
 		{
-			arr = ft_calloc(3, 1);
-			ft_memcpy(arr, str, 2);
+			arr = ft_calloc(len + 1, 1);
+			ft_memcpy(arr, str, len);
 			tmp = ft_strjoin(ret, arr);
 			free(arr);
 			free(ret);
