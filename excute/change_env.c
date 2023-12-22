@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 18:07:47 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/18 16:17:56 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/20 11:47:00 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*cpy_env_str(t_info *info, char *str, char *ret, int len)
 {
 	char	*exit_code;
 	char	*tmp;
+	char	*arr;
 
 	if (!(ft_isalpha(*(str + 1)) || *(str + 1) == '_'))
 	{
@@ -28,7 +29,14 @@ char	*cpy_env_str(t_info *info, char *str, char *ret, int len)
 			return (tmp);
 		}
 		else
-			return (ret);
+		{
+			arr = ft_calloc(3, 1);
+			ft_memcpy(arr, str, 2);
+			tmp = ft_strjoin(ret, arr);
+			free(arr);
+			free(ret);
+			return (tmp);
+		}
 	}
 	return (env_to_str(info, str + 1, ret, len - 1));
 }
@@ -71,6 +79,8 @@ int	return_env_len(char *str)
 	int	len;
 
 	len = 1;
+	if (str[len] == ' ' || str[len] == '\'' || str[len] == '"')
+		return (1);
 	if (!(ft_isalpha(str[len]) || str[len] == '_'))
 		return (2);
 	while (ft_isalnum(str[len]) || str[len] == '_')
@@ -98,7 +108,8 @@ char	*change_env(char *str, t_info *info)
 		if (*str == '$' && s_flag == 0)
 		{
 			len = return_env_len(str);
-			ret = cpy_env_str(info, str, ret, len);
+			if (*(str + 1) != '"')
+				ret = cpy_env_str(info, str, ret, len);
 			str += len;
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 19:30:03 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/15 16:08:25 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/20 12:05:17 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	read_heredoc(t_command *cmd, t_info *info, char *lim, int idx)
 		if (!ft_strncmp(lim, line, get_str_max_length(lim, line)))
 			break ;
 		if (cmd->inflag[idx / 2] == 1)
-			line = heredoc_change_env(line, info);
+			line = heredoc_change_env(line, info, 0, 0);
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 	}

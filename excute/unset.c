@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 17:14:09 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/14 17:14:16 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/19 17:17:39 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ static int	remove_ev(t_info *info, char *arg)
 		return (0);
 	if (check_valid(arg))
 	{
-		ft_putstr_fd("minishell: unset: ", 2);
+		ft_putstr_fd("minishell: unset: `", 2);
 		ft_putstr_fd(arg, 2);
-		ft_putstr_fd(": not a valid identifier\n", 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
 		return (1);
 	}
 	if (check_same_ev(info->envp, arg))
