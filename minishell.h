@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:19:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/18 17:05:02 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/20 12:06:06 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,8 @@ int			get_str_max_length(char *s1, char *s2);
 char		*make_heredoc_file_name(void);
 char		*make_limiter(t_command *cmd, int idx);
 
-char		*heredoc_change_env(char *str, t_info *info);
+char		*heredoc_change_env(char *str, t_info *info,
+				int d_flag, int s_flag);
 
 int			heredoc_search(t_ptree *tree, t_info *info, int flag);
 

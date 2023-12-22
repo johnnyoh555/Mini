@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 17:32:32 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/18 16:56:58 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/19 16:06:32 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ static int	single_builtin_cmd(t_command *command, t_info *info)
 	int		org_write;
 	int		ret;
 
-	org_read = dup(0);
-	org_write = dup(1);
 	if (get_fds(command, info, 0, 1))
 		return (1);
+	org_read = dup(0);
+	org_write = dup(1);
 	dup2(info->fd_read, 0);
 	dup2(info->fd_write, 1);
 	ret = go_to_builtin(command->exprs, info);
