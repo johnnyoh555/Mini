@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_search.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yoon <yoon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:15:39 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/15 18:55:28 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/23 15:57:19 by yoon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,6 @@ int	heredoc_process(t_ptree *tree, t_info *info, int flag)
 
 int	heredoc_search(t_ptree *tree, t_info *info, int flag)
 {
-	t_command	*cmd;
-
-	cmd = NULL;
 	if (tree == NULL)
 		return (0);
 	if (heredoc_search(tree->left, info, flag))

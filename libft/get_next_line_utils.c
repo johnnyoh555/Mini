@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yoon <yoon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 13:26:58 by jooh              #+#    #+#             */
-/*   Updated: 2023/11/12 21:53:12 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/23 15:58:37 by yoon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*read_over(t_lst *p, t_lst **info)
 
 	i = -1;
 	n = BUFFER_SIZE;
-	while (n == BUFFER_SIZE && check_endl(p) == 0 && ++i >= 0)
+	while (n == BUFFER_SIZE && check_endl(p) == 0)
 	{
 		if (i == (*info)->mul)
 		{	
