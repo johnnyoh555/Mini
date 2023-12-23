@@ -52,7 +52,7 @@ int	excute_cmd(t_command *cmd, t_info *info)
 	return (ret);
 }
 
-int	parser_tree_excutable(t_ptree *tree, t_command *cmd, t_info *info)
+int	parser_tree_excutable(t_command *cmd, t_info *info)
 {
 	int	ret;
 
@@ -61,13 +61,6 @@ int	parser_tree_excutable(t_ptree *tree, t_command *cmd, t_info *info)
 	{
 		ret = excute_cmd(cmd, info);
 		command_list_all_free(cmd);
-		if (tree->expr && !ft_strncmp("||", tree->expr, 3))
-		{
-			if (ret != 0)
-				ret = 0;
-			else
-				ret = -1;
-		}
 	}
 	return (ret);
 }
@@ -97,13 +90,11 @@ int	parser_tree_order(t_ptree *tree, t_command **pcmd, t_info *info, int ret)
 		ret = parser_tree_left(tree, pcmd, info, ret);
 	if (tree->type == P_CMD)
 	{
-		if (ret == -1 && tree->expr && !ft_strncmp("||", tree->expr, 3))
-		{
-			command_list_all_free(cmd);
+		if (cmd != NULL)
+			ret = parser_tree_excutable(tree, cmd, info);
+		if (tree->expr && !ft_strncmp("||", tree->expr, 3) && ret == 0)
 			return (ret);
-		}
-		ret = parser_tree_excutable(tree, cmd, info);
-		if (ret != 0)
+		if (tree->expr && !ft_strncmp("&&", tree->expr, 3) && ret != 0)
 			return (ret);
 		ret = parser_tree_order(tree->right, &cmd, info, ret);
 	}
