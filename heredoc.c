@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 19:30:03 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/20 12:05:17 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/22 20:37:03 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static void	read_heredoc(t_command *cmd, t_info *info, char *lim, int idx)
 			line = heredoc_change_env(line, info, 0, 0);
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
+		free(line);
 	}
 	free(lim);
 	close(fd);

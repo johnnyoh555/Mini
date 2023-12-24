@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tree_order.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yoon <yoon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 20:28:58 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/21 17:16:30 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/23 15:55:16 by yoon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void	init_info(t_command *command, t_info *info)
 {
 	int		i;
-	int		j;
 
 	info->cmd = 0;
 	while (command)
@@ -27,7 +26,6 @@ static void	init_info(t_command *command, t_info *info)
 	info->path = 0;
 	while ((info->envp)[i])
 	{
-		j = -1;
 		if (!ft_strncmp("PATH=", (info->envp)[i], 5))
 		{
 			info->path = ft_split((info->envp)[i] + 5, ':');
@@ -52,7 +50,7 @@ int	excute_cmd(t_command *cmd, t_info *info)
 	return (ret);
 }
 
-int	parser_tree_excutable(t_ptree *tree, t_command *cmd, t_info *info)
+int	parser_tree_excutable(t_command *cmd, t_info *info)
 {
 	int	ret;
 
@@ -61,13 +59,6 @@ int	parser_tree_excutable(t_ptree *tree, t_command *cmd, t_info *info)
 	{
 		ret = excute_cmd(cmd, info);
 		command_list_all_free(cmd);
-		if (tree->expr && !ft_strncmp("||", tree->expr, 3))
-		{
-			if (ret != 0)
-				ret = 0;
-			else
-				ret = -1;
-		}
 	}
 	return (ret);
 }
@@ -97,13 +88,11 @@ int	parser_tree_order(t_ptree *tree, t_command **pcmd, t_info *info, int ret)
 		ret = parser_tree_left(tree, pcmd, info, ret);
 	if (tree->type == P_CMD)
 	{
-		if (ret == -1 && tree->expr && !ft_strncmp("||", tree->expr, 3))
-		{
-			command_list_all_free(cmd);
+		if (cmd != NULL)
+			ret = parser_tree_excutable(cmd, info);
+		if (tree->expr && !ft_strncmp("||", tree->expr, 3) && ret == 0)
 			return (ret);
-		}
-		ret = parser_tree_excutable(tree, cmd, info);
-		if (ret != 0)
+		if (tree->expr && !ft_strncmp("&&", tree->expr, 3) && ret != 0)
 			return (ret);
 		ret = parser_tree_order(tree->right, &cmd, info, ret);
 	}

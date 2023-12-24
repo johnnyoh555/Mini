@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 13:26:58 by jooh              #+#    #+#             */
-/*   Updated: 2023/11/12 21:53:12 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/24 11:53:30 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ char	*read_over(t_lst *p, t_lst **info)
 	int		n;
 	size_t	i;
 
-	i = -1;
+	i = 0;
 	n = BUFFER_SIZE;
-	while (n == BUFFER_SIZE && check_endl(p) == 0 && ++i >= 0)
+	while (n == BUFFER_SIZE && check_endl(p) == 0)
 	{
 		if (i == (*info)->mul)
 		{	
@@ -83,6 +83,7 @@ char	*read_over(t_lst *p, t_lst **info)
 		}
 		p->len += n;
 		*(p->save_char + p->len) = 0;
+		i++;
 	}
 	return (check_whatread(p, info, n));
 }

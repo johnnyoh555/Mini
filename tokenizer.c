@@ -6,7 +6,7 @@
 /*   By: sungyoon <sungyoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 13:15:18 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/21 14:19:41 by sungyoon         ###   ########.fr       */
+/*   Updated: 2023/12/22 21:17:22 by sungyoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,10 @@ static int	tokenizer_check_quote(int idx, char *str, int flag)
 			flag |= E_QUOTE;
 		else if (str[idx] == '\"' && (flag & E_ALL_QUOTE) == 0)
 			flag |= E_DOUBLE_QUOTE;
-		else if (str[idx] == '\'' && (flag & E_ALL_QUOTE) != 0)
-		{
+		else if (str[idx] == '\'' && (flag & E_QUOTE) != 0)
 			flag &= ~(E_QUOTE);
-			return (flag);
-		}
 		else if (str[idx] == '\"' && (flag & E_DOUBLE_QUOTE) != 0)
-		{
 			flag &= ~(E_DOUBLE_QUOTE);
-			return (flag);
-		}
 	}
 	return (flag);
 }
