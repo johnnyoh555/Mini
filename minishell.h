@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:19:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/22 20:49:04 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/24 15:10:28 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,12 +219,12 @@ int			builtin_env(char **cmd, t_info *info);
 int			builtin_cd(char **cmd, t_info *info);
 
 // excute/extend_env.c
-char		*env_to_str(t_info *info, char *str, char *ret, int len);
+char		*env_to_str(t_info *info, char *str, int len);
 int			extend_env(t_command *command, t_info *info);
-char		*add_quote(char *str, int d_flag);
+char		*add_quote_join(char *ret, char *str, int d_flag);
 
 // excute/change_env.c
-char		*cpy_env_str(t_info *info, char *str, char *ret, int len);
+char		*cpy_env_str(t_info *info, char *str, int len);
 char		*cpy_normal_str(char *str, char *ret, int len);
 int			return_env_len(char *str);
 char		*change_env(char *str, t_info *info);

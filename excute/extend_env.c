@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 17:22:34 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/22 20:47:27 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/24 15:15:12 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,21 @@ static int	check_env_cmd(t_command *command, t_info *info)
 	return (0);
 }
 
-char	*add_quote(char *str, int d_flag)
+char	*add_quote_join(char *ret, char *str, int d_flag)
 {
 	char	*tmp;
 
-	if (d_flag == 1)
-		return (str);
-	tmp = ft_strjoin("\"", str);
+	if (d_flag == 0 && ft_strlen(str))
+	{
+		tmp = ft_strjoin("\"", str);
+		free(str);
+		str = ft_strjoin(tmp, "\"");
+		free(tmp);
+	}
+	tmp = ft_strjoin(ret, str);
+	free(ret);
 	free(str);
-	str = ft_strjoin(tmp, "\"");
-	free(tmp);
-	return (str);
+	return (tmp);
 }
 
 int	extend_env(t_command *command, t_info *info)
@@ -62,10 +66,9 @@ int	extend_env(t_command *command, t_info *info)
 	return (0);
 }
 
-char	*env_to_str(t_info *info, char *str, char *ret, int len)
+char	*env_to_str(t_info *info, char *str, int len)
 {
 	int		idx;
-	char	*tmp;
 	char	*env;
 
 	idx = 0;
@@ -76,17 +79,14 @@ char	*env_to_str(t_info *info, char *str, char *ret, int len)
 		{
 			if (info->envp[idx][len] == 0 || (info->envp[idx][len] == '='
 				&& info->envp[idx][len + 1] == 0))
-				return (ret);
+				return (ft_strdup(""));
 			else
 			{
 				env = ft_strdup(info->envp[idx] + len + 1);
-				tmp = ft_strjoin(ret, env);
-				free(ret);
-				free(env);
-				return (tmp);
+				return (env);
 			}
 		}
 		idx++;
 	}
-	return (ret);
+	return (ft_strdup(""));
 }

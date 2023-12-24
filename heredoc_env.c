@@ -6,7 +6,7 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 13:01:28 by sungyoon          #+#    #+#             */
-/*   Updated: 2023/12/20 12:11:09 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/24 15:19:27 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*heredoc_change_env(char *str, t_info *info, int d_flag, int s_flag)
 			if (len == 1)
 				ret = cpy_dollar(ret);
 			else
-				ret = cpy_env_str(info, str, ret, len);
+				ret = add_quote_join(ret, cpy_env_str(info, str, len), 1);
 			str += len;
 		}
 	}

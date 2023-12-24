@@ -6,16 +6,15 @@
 /*   By: jooh <jooh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 18:07:47 by jooh              #+#    #+#             */
-/*   Updated: 2023/12/22 20:47:38 by jooh             ###   ########.fr       */
+/*   Updated: 2023/12/24 15:14:30 by jooh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*cpy_env_str(t_info *info, char *str, char *ret, int len)
+char	*cpy_env_str(t_info *info, char *str, int len)
 {
 	char	*exit_code;
-	char	*tmp;
 	char	*arr;
 
 	if (!(ft_isalpha(*(str + 1)) || *(str + 1) == '_'))
@@ -23,22 +22,16 @@ char	*cpy_env_str(t_info *info, char *str, char *ret, int len)
 		if (*(str + 1) == '?')
 		{
 			exit_code = ft_itoa(info->exit_code);
-			tmp = ft_strjoin(ret, exit_code);
-			free(exit_code);
-			free(ret);
-			return (tmp);
+			return (exit_code);
 		}
 		else
 		{
 			arr = ft_calloc(len + 1, 1);
 			ft_memcpy(arr, str, len);
-			tmp = ft_strjoin(ret, arr);
-			free(arr);
-			free(ret);
-			return (tmp);
+			return (arr);
 		}
 	}
-	return (env_to_str(info, str + 1, ret, len - 1));
+	return (env_to_str(info, str + 1, len - 1));
 }
 
 char	*cpy_normal_str(char *str, char *ret, int len)
@@ -109,7 +102,7 @@ char	*change_env(char *str, t_info *info)
 		{
 			len = return_env_len(str);
 			if (*(str + 1) != '"' && *(str + 1) != '\'')
-				ret = add_quote(cpy_env_str(info, str, ret, len), d_flag);
+				ret = add_quote_join(ret, cpy_env_str(info, str, len), d_flag);
 			str += len;
 		}
 	}
